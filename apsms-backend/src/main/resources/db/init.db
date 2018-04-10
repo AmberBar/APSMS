@@ -1,0 +1,38 @@
+//创建零件表 create auto_parts table
+CREATE TABLE `apsms`.`auto_parts` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `parts_id` INT NOT NULL,
+  `price` DOUBLE NOT NULL,
+  `inventory` INT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  UNIQUE INDEX `parts_id_UNIQUE` (`parts_id` ASC));
+
+
+
+  //create customer table
+  CREATE TABLE `apsms`.`customer` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(45) NOT NULL,
+    `password` VARCHAR(45) NOT NULL,
+    `adr_name` VARCHAR(45) NULL,
+    `phone` VARCHAR(45) NULL,
+    `adr_code` VARCHAR(45) NULL,
+    `email` VARCHAR(45) NULL,
+    `register_date` DATE NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+    UNIQUE INDEX `name_UNIQUE` (`name` ASC));
+
+    ALTER TABLE `apsms`.`customer`
+    ADD COLUMN `is_admin` VARCHAR(45) NULL DEFAULT 'false' AFTER `register_date`;
+
+
+    ALTER TABLE `apsms`.`customer`
+    CHANGE COLUMN `is_admin` `is_admin` VARCHAR(45) NULL ;
+
+    ALTER TABLE `apsms`.`customer`
+    RENAME TO  `apsms`.`users` ;
+
+

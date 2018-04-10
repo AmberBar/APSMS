@@ -43,28 +43,30 @@
             <scope>true</scope>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-data-jpa</artifactId>-->
-        <!--</dependency>-->
-
+        <!-- spring-boot-starter-data-jpa -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <!-- mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <!-- spring-boot-configuration-processor -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
-    <!--&lt;!&ndash; 构建节点. &ndash;&gt;-->
-    <!--<build>-->
-        <!--<plugins>-->
-
-            <!--&lt;!&ndash; 这是spring boot devtool plugin 热部署3 常用&ndash;&gt;-->
-            <!--<plugin>-->
-                <!--<groupId>org.springframework.boot</groupId>-->
-                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-                <!--<configuration>-->
-                    <!--&lt;!&ndash;fork :  如果没有该项配置，这个devtools不会起作用，即应用不会restart &ndash;&gt;-->
-                    <!--<fork>true</fork>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-        <!--</plugins>-->
-
-    <!--</build>-->
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
