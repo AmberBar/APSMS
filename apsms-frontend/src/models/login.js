@@ -1,9 +1,12 @@
+import { checkLogin } from "../services/user.js"
 
 export default {
 
     namespace: 'login',
   
-    state: {},
+    state: {
+      username: ''
+    },
   
     subscriptions: {
       setup({ dispatch, history }) {  
@@ -12,6 +15,9 @@ export default {
             if (location.pathname == "/apsms") {
               dispatch({
                 type: 'init',
+                payload: {
+
+                }
               });
             }
           });
@@ -19,12 +25,19 @@ export default {
     },
   
     effects: {
-        *init({ payload }, { call, put }) {
+        *init({ payload }, { call, put }) {   
             yield put({
                 type: "save",
                 payload: {}
             });
         },
+        *checkLogin({ payload }, { put, call }) {
+          const result = yield call(checkLogin  , payload.values);
+          
+          // const result = checkLogin(payload.values)
+          console.log("****************")
+          console.log(result)
+        }
     },
   
     reducers: {

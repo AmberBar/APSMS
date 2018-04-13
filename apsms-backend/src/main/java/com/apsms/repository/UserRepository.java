@@ -11,5 +11,5 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User,String> {
 
     @Query(value = "select * from user b where b.name like %?1%", nativeQuery = true)
-    List<User> findByName(String name);
+    List<User> fuzzyQueryByName(String name);
 }

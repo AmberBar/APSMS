@@ -3,13 +3,22 @@ import { connect } from 'dva';
 import Login from '../components/login/login';
 
 export function LoginApsms({history, dispatch, login}) {
-    // const {} = login;
-    const loginProps = {
+    // const { username } = login;
+   
 
+    const loginProps = {
+        submit(values) {
+            dispatch({
+                type: 'login/checkLogin',
+                payload: {
+                    values
+                }
+            });
+        }
     }
     
     return(
-        <Login />
+        <Login {...loginProps}/>
     );
 }
 

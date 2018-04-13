@@ -1,4 +1,7 @@
 import fetch from 'dva/fetch';
+import axios from 'axios';
+import notie from 'notie';
+import { getAPIDomain } from '../utils/config.js';
 
 function parseJSON(response) {
   return response.json();
@@ -6,6 +9,7 @@ function parseJSON(response) {
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
+    console.log(response)
     return response;
   }
 
@@ -14,17 +18,28 @@ function checkStatus(response) {
   throw error;
 }
 
-/**
- * Requests a URL, returning a promise.
- *
- * @param  {string} url       The URL we want to request
- * @param  {object} [options] The options we want to pass to "fetch"
- * @return {object}           An object containing either "data" or "err"
- */
-export default function request(url, options) {
-  return fetch(url, options)
-    .then(checkStatus)
-    .then(parseJSON)
-    .then(data => ({ data }))
-    .catch(err => ({ err }));
-}
+function checkServerError(response) {  
+  console.log('sssssss') 
+   console.log(response)  
+   const data = response.data;  
+      return response;
+  }
+
+export default function request(
+  options, needToken = true) {  
+    console.log(options)
+    console.log(getAPIDomain())
+  // const token = needToken ? getTokenInLocalStorage() : '';
+  const token = ""
+  let defaultOptions = {    
+    baseURL: getAPIDomain(),    
+    headers: { 
+              'Content-Type': 'application/json',    
+              // 'Access-Control-Allow-Origin' : '*' ,
+              // 'Authorization': 'Bearer ' + token,  
+              }  
+  }
+    const mergedOptions = {...defaultOptions, ...options}; 
+    return axios(mergedOptions).then(checkStatus);
+  }
+

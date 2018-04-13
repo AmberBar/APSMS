@@ -22,7 +22,7 @@ public class User {
     @Id
     @NotBlank(message = "用户名不能为空")
     @Column(name="name")
-    private String name;
+    private String userName;
     @NotBlank(message = "密码不能为空")
     @Column(name="password")
     private String password;
@@ -47,11 +47,11 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return userName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.userName = name;
     }
 
     public String getPassword() {
@@ -121,7 +121,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
+                "name='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", adrName='" + adrName + '\'' +
                 ", phone='" + phone + '\'' +

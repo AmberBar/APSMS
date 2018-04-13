@@ -11,7 +11,11 @@ public interface UserService {
 
     public List<User> queryAll();
 
-    public List<User> findUserByName(String name);
+    public List<User> checkLogin(User user);
+
+    public User findUserByName(String name, String password);
+
+    public List<User> fuzzyQueryUsersByName(String name);
 
     public User  createUser(User user);
 

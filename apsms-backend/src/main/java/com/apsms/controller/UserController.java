@@ -15,16 +15,25 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("")
-    public List<User> users() {
-        List<User> users = userService.queryAll();
+    @GetMapping("/find")
+    public List<User> usersAll() {
 
+        List<User> users = userService.queryAll();
+        System.out.print(users);
         return users;
+    }
+
+    @PostMapping("/check")
+    public User users(@RequestParam("username") String name,
+                            @RequestParam("password") String password) {
+        User user = userService.findUserByName(name, password);
+        return user;
     }
 
     @GetMapping("/{name}")
     public List<User> findUserByName( @PathVariable("name") String name) {
-        List users = userService.findUserByName(name);
+        List users = userService.fuzzyQueryUsersByName(name);
+
         return users;
     }
 

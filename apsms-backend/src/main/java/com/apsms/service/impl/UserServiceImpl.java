@@ -24,8 +24,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findUserByName(String name) {
-        List users = userRepository.findByName(name);
+    public List<User> checkLogin(User user) {
+//        userRepository.findByName(name);
+        return null;
+    }
+
+    @Override
+    public User findUserByName(String name, String password) {
+        return userRepository.findOne(name);
+    }
+
+    @Override
+    public List<User> fuzzyQueryUsersByName(String name) {
+        List users = userRepository.fuzzyQueryByName(name);
         return users;
     }
 
