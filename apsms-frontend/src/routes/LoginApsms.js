@@ -5,7 +5,7 @@ import Login from '../components/login/login';
 export function LoginApsms({history, dispatch, login}) {
     // const { username } = login;
    
-
+    console.log(login)
     const loginProps = {
         submit(values) {
             dispatch({

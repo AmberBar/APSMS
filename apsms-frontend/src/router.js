@@ -1,15 +1,30 @@
-import React from 'react';
-import { Router, Route, Switch , Redirect} from 'dva/router';
-import LoginApsms from './routes/LoginApsms';
+// import React from 'react';
+// import { Router, Route, Switch , Redirect} from 'dva/router';
+// import dynamic from 'dva/dynamic'
+// import app from './index'
+import { Router} from 'dva/router';
+import React from 'react'
+// import modelExtend from 'dva-model-extend'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import dynamic from 'dva/dynamic'
-import app from './index'
+import {app} from './index'
 
 function RouterConfig({ history}) {
-    const routes = [{
-      path: `/apsms`,
-      model: () => [import('./models/login')],
-      component: () => import('./routes/LoginApsms'),
-    }]
+    console.log("************app****************")
+    console.log(app)
+    const routes = [
+      {
+        path: `/register`,
+        models: () => [import('./models/register')],
+        component: () => import('./routes/RegisterUser'),
+      }
+      ,
+      {
+        path: `/apsms`,
+        models: () => [import('./models/login')],
+        component: () => import('./routes/LoginApsms'),
+      }
+    ]
     return (
       <Router history={history}>
         <Switch>

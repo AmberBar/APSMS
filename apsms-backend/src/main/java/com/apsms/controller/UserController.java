@@ -1,11 +1,14 @@
 package com.apsms.controller;
 
+import com.apsms.Exception.UserNotExistExcepion;
+import com.apsms.modal.JsonResponse;
 import com.apsms.modal.User;
 import com.apsms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 @RequestMapping("/api/users")
@@ -24,23 +27,36 @@ public class UserController {
     }
 
     @PostMapping("/check")
-    public User users(@RequestParam("username") String name,
+    public JsonResponse users(@RequestParam("username") String name,
                             @RequestParam("password") String password) {
-        User user = userService.findUserByName(name, password);
-        return user;
+        User user = userService.findUserByName(name);
+
+        if (user == null) {
+            throw  new IllegalArgumentException("username or password is wrong");
+        }
+        return new JsonResponse(true, user);
     }
 
     @GetMapping("/{name}")
     public List<User> findUserByName( @PathVariable("name") String name) {
+
         List users = userService.fuzzyQueryUsersByName(name);
 
         return users;
     }
 
-    @PostMapping("")
-    public User CreateUser(@Valid @RequestBody User user) {
+    @PostMapping("/create")
+    public JsonResponse CreateUser (
+            @Valid @RequestBody User user
+    ) {
+        user.setRegDate(new Date());
+        User oldUser = userService.findUserByName(user.getUsername());
+        if (oldUser != null) {
+            throw new IllegalArgumentException("username is exit");
+        }
         User newUser = userService.createUser(user);
-        return newUser;
+
+        return new JsonResponse(true, newUser);
     }
 
     @DeleteMapping("/{name}")

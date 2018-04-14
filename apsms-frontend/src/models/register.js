@@ -1,9 +1,11 @@
-import { checkLogin } from "../services/user.js"
-import { message } from "antd";
+import { register } from "../services/user.js"
+import { routerRedux } from 'dva/router';
+import { connectAdvanced } from "react-redux";
+import { message } from 'antd';
 
 export default {
 
-    namespace: 'login',
+    namespace: 'register',
   
     state: {
       username: ''
@@ -13,7 +15,7 @@ export default {
       setup({ dispatch, history }) {  
           // eslint-disable-line
           history.listen(location => {
-            if (location.pathname === "/apsms") {
+            if (location.pathname === "/register") {
               dispatch({
                 type: 'init',
                 payload: {
@@ -27,17 +29,16 @@ export default {
   
     effects: {
         *init({ payload }, { call, put }) {   
-            yield put({
-                type: "save",
-                payload: {}
-            });
         },
-        *checkLogin({ payload }, { put, call }) {
-          const result = yield call(checkLogin  , payload.values);
-          if (result.data.success === true) {
-            
+
+        *registerUser({ payload }, { put, call }) {    
+          const data = yield call(register, payload);
+          console.log("data")
+          console.log(data.data.success)
+          if (data.data.success === true ) {
+            yield put(routerRedux.push('/apsms'));
           } else {
-            message.error(result.data.data)
+            message.warn(data.data.data);
           }
         }
     },

@@ -18,27 +18,19 @@ function checkStatus(response) {
   throw error;
 }
 
-function checkServerError(response) {  
-  console.log('sssssss') 
-   console.log(response)  
-   const data = response.data;  
-      return response;
-  }
-
 export default function request(
-  options, needToken = true) {  
-    console.log(options)
-    console.log(getAPIDomain())
-  // const token = needToken ? getTokenInLocalStorage() : '';
-  const token = ""
-  let defaultOptions = {    
-    baseURL: getAPIDomain(),    
-    headers: { 
-              'Content-Type': 'application/json',    
-              // 'Access-Control-Allow-Origin' : '*' ,
-              // 'Authorization': 'Bearer ' + token,  
-              }  
-  }
+    options, needToken = true) {  
+      console.log(options)
+      console.log(getAPIDomain())
+    const token = ""
+    let defaultOptions = {    
+      baseURL: getAPIDomain(),    
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Headers': '*'
+      }
+    }
+  
     const mergedOptions = {...defaultOptions, ...options}; 
     return axios(mergedOptions).then(checkStatus);
   }

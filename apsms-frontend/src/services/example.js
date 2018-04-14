@@ -6,7 +6,6 @@ export function query() {
 
 export function checkLogin(params) {
   // return request('/api/users/check/');
-  alert("success")
   request({
     url: `/users/check/${params}`,
   })
