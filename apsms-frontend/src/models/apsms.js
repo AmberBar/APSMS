@@ -1,10 +1,9 @@
 import { checkLogin } from "../services/user.js"
-import { routerRedux } from 'dva/router';
 import { message } from "antd";
 
 export default {
 
-    namespace: 'login',
+    namespace: 'apsms',
   
     state: {
       username: ''
@@ -27,7 +26,9 @@ export default {
     },
   
     effects: {
-        *init({ payload }, { call, put }) {   
+        *init({ payload }, { call, put }) {
+
+          yield call();
             yield put({
                 type: "save",
                 payload: {}
@@ -36,9 +37,7 @@ export default {
         *checkLogin({ payload }, { put, call }) {
           const result = yield call(checkLogin  , payload.values);
           if (result.data.success === true) {
-            yield put(routerRedux.push('/apsms'));
-
-            //把用户信息放到cookies
+            
           } else {
             message.error(result.data.data)
           }
@@ -50,6 +49,5 @@ export default {
         return { ...state, ...action.payload };
       },
     },
-  
-  };
+};
   

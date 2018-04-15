@@ -8,7 +8,6 @@ export async function checkLogin(params) {
   })
 }
 
-
 export async function register(params) {
   return request({
     url: `/users/create`,
