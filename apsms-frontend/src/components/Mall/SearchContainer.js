@@ -12,10 +12,14 @@ class SearchContainer extends Component {
 
     }
 
+    search = (event) => {
+      this.props.search(event);
+    }
+    
     render() {
       return (
         <div id="search_container">
-            <Search placeholder="input search text" enterButton="Search" size="large" />
+            <Search placeholder="input search text" enterButton="Search" size="large" onSearch={this.search}/>
         </div>
       );
     }

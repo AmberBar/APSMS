@@ -81,8 +81,8 @@ public class UserController {
         userService.deleteUserByName(name);
     }
 
-    @PutMapping("")
-    public User UpdateUser(@RequestBody User user) {
-        return userService.updateUser(user);
+    @PutMapping("/update")
+    public JsonResponse UpdateUser(@RequestBody User user) {
+        return new JsonResponse(true, userService.updateUser(user));
     }
 }

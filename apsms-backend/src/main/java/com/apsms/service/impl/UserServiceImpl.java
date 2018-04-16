@@ -1,5 +1,6 @@
 package com.apsms.service.impl;
 
+import com.apsms.modal.JsonResponse;
 import com.apsms.modal.User;
 import com.apsms.repository.UserRepository;
 import com.apsms.service.UserService;
@@ -75,8 +76,8 @@ public class UserServiceImpl implements UserService {
         String password = user.getPassword();
         password = Md5Util.EncoderByMd5(password);
         user.setPassword(password);
-        System.out.println("**************************************");
-        System.out.print(user);
+//        System.out.println("**************************************");
+//        System.out.print(user);
 
         User newUser =  userRepository.save(user);
 

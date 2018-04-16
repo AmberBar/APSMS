@@ -23,7 +23,7 @@ public class User implements UserDetails {
 //    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @NotBlank(message = "用户名不能为空")
-    @Column(name="username")
+    @Column(name="username", unique = true)
     private String username;
     @NotBlank(message = "密码不能为空")
     @Column(name="password")
@@ -35,7 +35,7 @@ public class User implements UserDetails {
     private String email;
     @Column(name="register_date")
     private Date regDate;
-    @Column(name="phone", unique = false)
+    @Column(name="phone", unique = true)
     private String phone;
 
     public static long getSerialVersionUID() {

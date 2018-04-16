@@ -2,6 +2,7 @@ import { findAllUsers } from "../services/user.js"
 import { setcookie } from "../utils/common.js"
 import { routerRedux } from 'dva/router';
 import { message } from "antd";
+import { register, updateUser } from "../services/user.js"
 
 export default {
 
@@ -13,7 +14,10 @@ export default {
         "username": "",
         "pageNumber": 0,
         "pageSize": 2,
-      }
+      },
+      showModal: false,
+      index: -1,
+      showCreateModal: false,
     },
   
     subscriptions: {
@@ -43,8 +47,7 @@ export default {
                       users: result.data.data.content
                     }
                 });
-                console.log("********user************")
-                console.log(result.data.data)
+            
                 let pageParams = {
                   pageSize: result.data.data.pageSize,
                   pageNumber:  result.data.data.size,
@@ -75,29 +78,87 @@ export default {
                 payload: {
                   users: result.data.data.content
                 }
-            });
-              console.log("********user************")
-              console.log(result.data.data)
-              let pageParams = {
-                pageSize: result.data.data.size,
-                pageNumber:  result.data.data.number,
-                total: result.data.data.totalElements,
-                current: Number(result.data.data.number) + 1
+          });
+            let pageParams = {
+              pageSize: result.data.data.size,
+              pageNumber:  result.data.data.number,
+              total: result.data.data.totalElements,
+              current: Number(result.data.data.number) + 1
+            }
+          
+            const pagination = yield select(state => state.user.pagination);
+            pageParams = {...pagination, ...pageParams}
+          
+            yield put({
+              type: "save",
+              payload: {
+                pagination: pageParams
               }
-           
-              const pagination = yield select(state => state.user.pagination);
-              pageParams = {...pagination, ...pageParams}
-            
-              yield put({
-                type: "save",
-                payload: {
-                  pagination: pageParams
-                }
-              })
+            })
           } else {
-              message.error(result.data.data)
-          }
+            message.error(result.data.data)
         }
+      },
+      *registerUser({ payload }, { put, call }) {    
+        const data = yield call(register, payload);
+        if (data.data.success === true ) {
+          // yield put(
+          //   routerRedux.push('/users')
+          // );
+
+          
+          yield put({
+            type: "save",
+            payload: {
+              users: [],
+                pagination: {
+                  "username": "",
+                  "pageNumber": 0,
+                  "pageSize": 2,
+                },
+                showModal: false,
+                index: -1,
+                showCreateModal: false,
+            }
+          });
+          yield put({
+            type: "init",
+            payload: {
+             
+            }
+          });
+        } else {
+          message.warn(data.data.data);
+        }
+      },
+      *updateUser({ payload }, { put, call }) {    
+        const data = yield call(updateUser, payload);
+        if (data.data.success === true ) {
+          
+          yield put({
+            type: "save",
+            payload: {
+              users: [],
+                pagination: {
+                  "username": "",
+                  "pageNumber": 0,
+                  "pageSize": 2,
+                },
+                showModal: false,
+                index: -1,
+                showCreateModal: false,
+            }
+          });
+          yield put({
+            type: "init",
+            payload: {
+             
+            }
+          });
+        } else {
+          message.warn(data.data.data);
+        }
+      },
     },
   
     reducers: {

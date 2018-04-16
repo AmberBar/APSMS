@@ -1,4 +1,5 @@
 import request from '../utils/request';
+import { push } from 'react-router-redux';
 
 export async function checkLogin(params) {
   return request({
@@ -20,6 +21,14 @@ export async function findAllUsers(params) {
   return request({
     url: `/users/query`,
     params: params
+  })
+}
+
+export async function updateUser(params) {
+  return request({
+    url: `/users/update`,
+    data: params,
+    method: "put"
   })
 }
   

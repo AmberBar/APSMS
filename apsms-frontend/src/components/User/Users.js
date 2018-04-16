@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import styles from './Users.less'
 import { Link } from 'react-router-dom'
-import { Table, Input, Icon} from 'antd';
+// import { Table, Input, Icon, Modal, Button, Form, Select} from 'antd';
+import { register } from '../../services/user';
+import Register from "../login/Register"
+import CreateModal from './CreateModal';
+import {Table, Modal, Form, Switch, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+const FormItem = Form.Item;
+const Option = Select.Option;
+const AutoCompleteOption = AutoComplete.Option;
 
 const Search = Input.Search;
 
@@ -14,12 +21,14 @@ class Users extends Component {
         dataSource: this.props.users,
         pagination: {
 
-        }
+        },
+        editVisible: false,
+        confirmDirty: false,
+        autoCompleteResult: [],
       }
     }
 
     componentWillReceiveProps(next) {
-      console.log(next.users)
       let list= next.users;
       for (let i = 0; i < list.length; i ++) {
           if (list[i].admin) {
@@ -42,11 +51,49 @@ class Users extends Component {
         pagination: pager,
       });
       this.props.changTablePagination(pager)
-      console.log("BBBBBBBBBBBBBBBBBB")
-      console.log(pager)
     }
-    
-    render() {      
+
+    setModal2Visible = () => {
+      this.setState({
+        editVisible: !this.state.editVisible
+      });
+    }
+
+  indexData (idx)  {
+    this.props.editUser(idx)
+  }
+
+    render() {
+      const { getFieldDecorator } = this.props.form;
+      const { autoCompleteResult } = this.state;
+  
+      const formItemLayout = {
+        labelCol: {
+          xs: { span: 24 },
+          sm: { span: 8 },
+        },
+        wrapperCol: {
+          xs: { span: 24 },
+          sm: { span: 16 },
+        },
+      };
+      const tailFormItemLayout = {
+        wrapperCol: {
+          xs: {
+            span: 24,
+            offset: 0,
+          },
+          sm: {
+            span: 16,
+            offset: 8,
+          },
+        },
+      };
+  
+      const websiteOptions = autoCompleteResult.map(website => (
+        <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
+      ));
+
       const columns = [{
         title: 'name',
         dataIndex: 'username',
@@ -79,18 +126,16 @@ class Users extends Component {
       {
         title: 'Action',
         key: 'action',
-        render: (text, record) => (
+        render: (text, record, index) => (
           <span>
-            <a href="javascript:;">Edit</a>
-            &nbsp;
-            <a href="javascript:;">Delete</a>
-            
+              <Button type="primary" onClick={() => this.indexData(index)}>Edit</Button>
+              <a href="javascript:;">Delete</a>
           </span>
+          
         ),
       }
     ];
-    console.log("><???????????<>>>>>>>>>>>>>>>>>>>>>>")
-    console.log(this.state.pagination)
+
       return (
         <div id="users_container">
             <Table 
@@ -103,5 +148,7 @@ class Users extends Component {
       );
     }
 }
+
+Users = Form.create()(Users);
 
 export default Users;
