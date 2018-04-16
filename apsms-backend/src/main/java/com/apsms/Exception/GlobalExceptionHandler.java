@@ -28,7 +28,7 @@ public class GlobalExceptionHandler implements ApplicationContextAware {
     @ExceptionHandler(value = Exception.class)//处理所有异常
     @ResponseBody
     public JsonResponse exceptionHandler(Exception exception, HttpServletResponse response) {
-
+        System.out.println(exception);
         return new JsonResponse(false, exception.getMessage());
     }
 

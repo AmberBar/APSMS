@@ -1,7 +1,6 @@
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { Layout, Menu } from 'antd';
 import React, { Component } from 'react';
 import styles from './MainLayout.less'
-import { Link } from 'react-router-dom'
 import SiderLayout from "./SiderLayout"
 
 const { Header, Content, Footer, Sider } = Layout;

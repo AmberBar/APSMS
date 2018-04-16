@@ -5,8 +5,6 @@ import dynamic from 'dva/dynamic'
 import {app} from './index'
 
 function RouterConfig({ history}) {
-    console.log("************app****************")
-    console.log(app)
     const routes = [
       {
         path: `/register`,
@@ -23,6 +21,12 @@ function RouterConfig({ history}) {
         path: `/apsms`,
         models: () => [import('./models/apsms')],
         component: () => import('./routes/Apsms'),
+      }
+      ,
+      {
+        path: `/users`,
+        models: () => [import('./models/user')],
+        component: () => import('./routes/UserCrud'),
       }
     ]
     return (

@@ -47,7 +47,10 @@ class SiderLayout extends Component {
                 </SubMenu>
                 <SubMenu key="admin" title={<span><Icon type="user" />I am admin</span>}>
                     <Menu.Item key="1">CURD Goods</Menu.Item>
-                    <Menu.Item key="2">CURD Users</Menu.Item>
+
+                    <Menu.Item key="users">
+                        <Link to="/users">CURD Users</Link>
+                    </Menu.Item>
                 </SubMenu>
             </Menu>
           </Sider>

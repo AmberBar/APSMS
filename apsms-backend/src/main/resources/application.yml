@@ -11,4 +11,10 @@ spring.jpa.database: MYSQL
 spring.jpa.show-sql: true
 # 自动检查实体和数据库表是否一致，如果不一致则会进行更新数据库表
 #spring.jpa.hibernate.ddl-auto=: update
+
 spring.jpa.properties.hibernate.hbm2ddl.auto: update
+
+security.user.name: admin
+security.user.password: 123456
+management.security.enabled: true
+management.security.role: ADMIN

@@ -1,4 +1,10 @@
 
+export   function setcookie(name,value,day){
+    var expdate=new Date();  
+    var outms=day*24*60*60*1000;//过期时间，以天为单位‘1’表示一天  
+    expdate.setTime(expdate.getTime()+outms); 
+    document.cookie = name+"="+encodeURIComponent(value) + ";expires="+expdate.toGMTString();  
+};
 
 export function MD5(bit) {
     var sMessage = this;

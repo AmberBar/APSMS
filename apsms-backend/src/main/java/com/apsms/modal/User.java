@@ -2,18 +2,25 @@ package com.apsms.modal;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="user")
-public class User {
+public class User implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @NotBlank(message = "用户名不能为空")
     @Column(name="username")
@@ -28,7 +35,7 @@ public class User {
     private String email;
     @Column(name="register_date")
     private Date regDate;
-    @Column(name="phone", unique = true)
+    @Column(name="phone", unique = false)
     private String phone;
 
     public static long getSerialVersionUID() {
@@ -43,17 +50,17 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
-    }
+//    public String getUsername() {
+//        return username;
+//    }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
+//    public String getPassword() {
+//        return password;
+//    }
 
     public void setPassword(String password) {
         this.password = password;
@@ -89,6 +96,50 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
+
+        if (this.isAdmin()) {
+            auths.add(new SimpleGrantedAuthority("ADMIN"));
+            auths.add(new SimpleGrantedAuthority("USER"));
+        } else {
+            auths.add(new SimpleGrantedAuthority("USER"));
+        }
+
+        return auths;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     @Override
