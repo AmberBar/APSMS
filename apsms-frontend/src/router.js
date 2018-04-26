@@ -28,6 +28,18 @@ function RouterConfig({ history}) {
         models: () => [import('./models/user')],
         component: () => import('./routes/UserCrud'),
       }
+      ,
+      {
+        path: `/goods`,
+        models: () => [import('./models/Goods/goods')],
+        component: () => import('./routes/Goods/Goods'),
+      }
+      ,
+      {
+        path: `/goods/create`,
+        models: () => [import('./models/Goods/goods')],
+        component: () => import('./routes/Goods/CreateGoods'),
+      }
     ]
     return (
       <Router history={history}>

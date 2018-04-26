@@ -1,11 +1,12 @@
 import { Component } from "react";
 import styles from "./EditModal.less"
-import {Modal, Form, Switch, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import {Modal, Tree, Form, Switch, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
 
-
+const TreeNode = Tree.TreeNode;
+let rolesArray = []
 class EditModal extends Component {
     constructor(props) {
         super(props);
@@ -20,8 +21,16 @@ class EditModal extends Component {
       handleSubmit = () => {
         this.props.form.validateFields((err, values) => {
           if (!err) {
+            let params = []
+            for (let i = 0 ; i < rolesArray.length; i ++) {
+                let role = {
+                    "name": rolesArray[i]
+                }
+                params.push(role)
+            }
+            values.roles = params
             this.props.submit(values);
-            console.log('Received values of form: ', values);
+          //  console.log('Received values of form: ', values);
           }
         });
       }
@@ -49,19 +58,22 @@ class EditModal extends Component {
         callback();
       }
 
+      onCheck= (checkedKeys, info) => {
+        console.log(checkedKeys)
+        rolesArray = checkedKeys
+      }
 
-    setModal2Visible() {
-        this.setState({
-            editVisible: !this.state.editVisible
-        });
-    }  
+      setModal2Visible() {
+          this.setState({
+              editVisible: !this.state.editVisible
+          });
+      }  
 
 
     componentWillReceiveProps(next) {
         this.setState({
             editVisible: next.showModal
         });
-        // console.log(next.showModal)
     }
   
       render() {
@@ -100,8 +112,6 @@ class EditModal extends Component {
           <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
         ));
 
-        
-    
         return(
             <div>
                 <Modal
@@ -141,9 +151,35 @@ class EditModal extends Component {
                         rules: [{ required: false, message: 'Please input your username!', whitespace: true }],
                         initialValue: text.password
                     })(  
-                      <Input disabled="true"/>
+                      // <Input disabled="true"/>
+                      <div></div>
                     )}
                   </FormItem>
+                  <FormItem
+                    {...formItemLayout}
+                    label="roles"
+                    >
+                    {getFieldDecorator('roles', {
+                        rules: [
+                            {
+                                type: "array"
+                            },
+                        {
+                        required: false, message: 'Please input your role!',
+                        }],
+                    })(
+                        <div>
+                          <Tree
+                              checkable
+                              onCheck={this.onCheck}
+                        >
+                              <TreeNode title="user" key="USER"  />
+                              <TreeNode title="admin" key="ADMIN" />
+                              <TreeNode title="customer_service" key="CS" />
+                        </Tree>
+                        </div>
+                     )} 
+                </FormItem>
                   <FormItem
                     {...formItemLayout}
                     label={(

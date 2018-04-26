@@ -14,7 +14,7 @@ public interface UserService {
 
     public Page<User> queryAll(final User param, int pageNumber, int pageSize);
 
-    public List<User> checkLogin(User user);
+    public User checkLogin(String username);
 
     public User findUserByName(String name);
 
@@ -22,7 +22,9 @@ public interface UserService {
 
     public User  createUser(User user) throws NoSuchAlgorithmException, UnsupportedEncodingException;
 
-    public void deleteUserByName(String name);
+    public void deleteUser(User user);
 
     public User updateUser(User user);
+
+    public String refreshToken(String oldToken);
 }

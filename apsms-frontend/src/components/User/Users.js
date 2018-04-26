@@ -29,18 +29,10 @@ class Users extends Component {
     }
 
     componentWillReceiveProps(next) {
-      let list= next.users;
-      for (let i = 0; i < list.length; i ++) {
-          if (list[i].admin) {
-            list[i].admin = true + ""
-          } else {
-            list[i].admin = false + ""
-          }
-      }
     
       this.setState({
         pagination: next.pagination,
-        dataSource: list
+        dataSource: next.users
       });
     }
 
@@ -59,10 +51,12 @@ class Users extends Component {
       });
     }
 
-  indexData (idx)  {
-    this.props.editUser(idx)
-  }
-
+    indexData (idx)  {
+      this.props.editUser(idx)
+    }
+    handleDelete(idx) {
+      this.props.delete(idx);
+    }
     render() {
       const { getFieldDecorator } = this.props.form;
       const { autoCompleteResult } = this.state;
@@ -118,9 +112,18 @@ class Users extends Component {
       },
       
       {
-        title: 'is_admin',
-        dataIndex: 'admin',
-        key: 'admin',
+        title: 'role',
+        key: 'roles.name',
+        render: (text, record, index) => (
+          text.roles.map((role) => {
+            return (
+              <span>
+              {role.name} ;
+            </span>
+            )
+          })
+          
+        ),
       },
 
       {
@@ -129,9 +132,8 @@ class Users extends Component {
         render: (text, record, index) => (
           <span>
               <Button type="primary" onClick={() => this.indexData(index)}>Edit</Button>
-              <a href="javascript:;">Delete</a>
+              <Button type="primary" onClick={() => this.handleDelete(index)}>Delete</Button>
           </span>
-          
         ),
       }
     ];

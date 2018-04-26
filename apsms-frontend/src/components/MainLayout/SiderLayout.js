@@ -46,8 +46,20 @@ class SiderLayout extends Component {
                     <Menu.Item key="2">unfinished order</Menu.Item>
                 </SubMenu>
                 <SubMenu key="admin" title={<span><Icon type="user" />I am admin</span>}>
-                    <Menu.Item key="1">CURD Goods</Menu.Item>
-
+                        <SubMenu key="goods" title={<span><Icon type="goods" />CURD Goods</span>}>
+                            <Menu.Item key="all_goods">
+                                <Link to="/goods">
+                                    All Goods
+                                </Link>
+                            </Menu.Item>
+                            <Menu.Item key="create_goods">
+                                <Link to="/goods/create">
+                                    Create Goods
+                                </Link>                            
+                            </Menu.Item>
+                            <Menu.Item key="edit_goods">Edit Goods</Menu.Item>
+                            <Menu.Item key="delete_goods">Delete Goods</Menu.Item>
+                        </SubMenu>
                     <Menu.Item key="users">
                         <Link to="/users">CURD Users</Link>
                     </Menu.Item>

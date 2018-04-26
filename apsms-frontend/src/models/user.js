@@ -2,7 +2,7 @@ import { findAllUsers } from "../services/user.js"
 import { setcookie } from "../utils/common.js"
 import { routerRedux } from 'dva/router';
 import { message } from "antd";
-import { register, updateUser } from "../services/user.js"
+import { register, updateUser, deleteUser } from "../services/user.js"
 
 export default {
 
@@ -13,7 +13,7 @@ export default {
       pagination: {
         "username": "",
         "pageNumber": 0,
-        "pageSize": 2,
+        "pageSize": 10,
       },
       showModal: false,
       index: -1,
@@ -101,12 +101,7 @@ export default {
       },
       *registerUser({ payload }, { put, call }) {    
         const data = yield call(register, payload);
-        if (data.data.success === true ) {
-          // yield put(
-          //   routerRedux.push('/users')
-          // );
-
-          
+        if (data.data.success === true ) {    
           yield put({
             type: "save",
             payload: {
@@ -114,7 +109,7 @@ export default {
                 pagination: {
                   "username": "",
                   "pageNumber": 0,
-                  "pageSize": 2,
+                  "pageSize": 10,
                 },
                 showModal: false,
                 index: -1,
@@ -142,7 +137,7 @@ export default {
                 pagination: {
                   "username": "",
                   "pageNumber": 0,
-                  "pageSize": 2,
+                  "pageSize": 10,
                 },
                 showModal: false,
                 index: -1,
@@ -159,6 +154,35 @@ export default {
           message.warn(data.data.data);
         }
       },
+      *deleteUserById({ payload }, { put, call } ) {
+        const data = yield call(deleteUser, payload);
+        if (data.data.success === true ) {
+          
+          yield put({
+            type: "save",
+            payload: {
+              users: [],
+                pagination: {
+                  "username": "",
+                  "pageNumber": 0,
+                  "pageSize": 10,
+                },
+                showModal: false,
+                index: -1,
+                showCreateModal: false,
+            }
+          });
+          yield put({
+            type: "init",
+            payload: {
+             
+            }
+          });
+          message.success(data.data.data);
+        } else {
+          message.error(data.data.data);
+        }
+      }
     },
   
     reducers: {

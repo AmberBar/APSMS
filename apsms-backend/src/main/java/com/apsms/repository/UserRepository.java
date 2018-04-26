@@ -16,4 +16,7 @@ public interface UserRepository extends JpaRepository<User,String>, JpaSpecifica
 
     @Query(value = "select * from user where username=?1", nativeQuery = true)
     User checkLogin(String name);
+
+    @Query(value = "select * from user where id=?1", nativeQuery = true)
+    User findOne(Integer id);
 }

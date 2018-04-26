@@ -48,6 +48,13 @@ export function UserCrud({history, dispatch, user}) {
                     index: idx
                 }
             });
+        },
+        delete(idx) {
+            dispatch({
+                type: 'user/deleteUserById',
+                payload: 
+                    users[idx]
+            });
         }
     }
 

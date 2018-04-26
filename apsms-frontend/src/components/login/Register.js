@@ -17,14 +17,15 @@ class Register extends Component {
       }
     }
 
-    handleSubmit = () => {
+    handleSubmit = (e) => {
+      e.preventDefault();
       this.props.form.validateFields((err, values) => {
         if (!err) {
           this.props.submit(values);
-          // console.log('Received values of form: ', values);
         }
       });
     }
+    
     handleConfirmBlur = (e) => {
       const value = e.target.value;
       this.setState({ confirmDirty: this.state.confirmDirty || !!value });
@@ -78,7 +79,7 @@ class Register extends Component {
   
       return (
         <div id="register_container">
-          <Form onSubmit={() => this.handleSubmit()}>
+          <Form onSubmit={this.handleSubmit}>
             <FormItem
               {...formItemLayout}
               label={(

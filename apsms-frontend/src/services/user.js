@@ -31,5 +31,13 @@ export async function updateUser(params) {
     method: "put"
   })
 }
+
+export async function deleteUser(params) {
+  return request({
+    url: `/users/delete`,
+    data: params,
+    method: "delete"
+  })
+}
   
   

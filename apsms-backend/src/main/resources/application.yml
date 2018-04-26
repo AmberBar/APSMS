@@ -14,7 +14,18 @@ spring.jpa.show-sql: true
 
 spring.jpa.properties.hibernate.hbm2ddl.auto: update
 
-security.user.name: admin
-security.user.password: 123456
+security.user.name: amber
+security.user.password: 123
 management.security.enabled: true
 management.security.role: ADMIN
+
+
+upload.img.url: /static/img/
+
+logging.level.org.springframework.security: info
+
+audience:
+  clientId: 098f6bcd4621d373cade4e832627b4f6
+  base64Secret: MDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY=
+  name: restapiuser
+  expiresSecond: 172800

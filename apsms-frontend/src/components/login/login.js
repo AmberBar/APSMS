@@ -16,7 +16,6 @@ class Login extends Component {
       this.props.form.validateFields((err, values) => {
         if (!err) {
           this.props.submit(values);
-          // console.log('Received values of form: ', values);
         }
       });
     }

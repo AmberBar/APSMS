@@ -7,7 +7,9 @@ export function RegisterUser({history, dispatch, register}) {
     const registerProps = {
         submit(values) {
             let params = {
-                "admin": true,
+                "roles": [{
+                    "name": "USER"
+                }]
             }
             delete values.confirm
             values = {...values, ...params}

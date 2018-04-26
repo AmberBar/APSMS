@@ -172,3 +172,29 @@ export function MD5(bit) {
         return WordToHex(b)+WordToHex(c);
     }
 }
+
+export var localStorageService = {
+    setItem: function(key, value) {
+      if (key && value) {
+        key = btoa(key);
+        value = btoa(JSON.stringify(value));
+        window.localStorage.setItem(key, value);
+      }
+    },
+    getItem: function(key) {
+      var result = {};
+      if (key) {
+        var value = window.localStorage.getItem(btoa(key));
+        if (value) {
+          value = atob(value);
+          result = JSON.parse(value);
+        }
+      }
+      return result;
+    },
+    removeItem: function(key) {
+      if (key) {
+        window.localStorage.removeItem(btoa(key));
+      }
+    }
+  };

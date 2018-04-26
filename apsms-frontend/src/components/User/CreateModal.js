@@ -1,11 +1,13 @@
 import { Component } from "react";
 import styles from "./CreateModal.less"
-import {Modal, Form, Switch, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import {Modal, Form, Input, Tree, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
 
+const TreeNode = Tree.TreeNode;
 
+let checkArray = []
 class CreateModal extends Component {
     constructor(props) {
         super(props);
@@ -13,23 +15,30 @@ class CreateModal extends Component {
         this.state = {
           confirmDirty: false,
           autoCompleteResult: [],
-          editVisible: false
+          editVisible: true,
+          checked: []
         }
       }
   
-      handleSubmit = () => {
+      handleSubmit = (e) => {
+        e.preventDefault();
         this.props.form.validateFields((err, values) => {
           if (!err) {
+            let params = []
+            for (let i = 0 ; i < checkArray.length; i ++) {
+                console.log(i)
+                let role = {
+                    "name": checkArray[i]
+                }
+                params.push(role)
+            }
+            values.roles = params
             this.props.submit(values);
             console.log('Received values of form: ', values);
-            
           }
         });
       }
 
-      ChangeAdmin = (checked) => {
-        console.log(`switch to ${checked}`);
-      }
       handleConfirmBlur = (e) => {
         const value = e.target.value;
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
@@ -52,10 +61,10 @@ class CreateModal extends Component {
 
 
     setModal2Visible() {
-        this.setState({
-            editVisible: !this.state.editVisible
-        });
-        this.props.changeCreateModal(true)
+        // this.setState({
+        //     editVisible: !this.state.editVisible
+        // });
+        this.props.changeCreateModal(!this.state.editVisible)
     }  
 
     componentWillReceiveProps(next) {
@@ -64,6 +73,10 @@ class CreateModal extends Component {
             editVisible: next.showCreateModal
         });
     }
+
+      onCheck = (checkedKeys, info) => {
+            checkArray = checkedKeys
+        }
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -94,6 +107,8 @@ class CreateModal extends Component {
         const websiteOptions = autoCompleteResult.map(website => (
           <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
         ));
+
+        
     
         return(
             <div>
@@ -106,7 +121,7 @@ class CreateModal extends Component {
                     onCancel={() => this.setModal2Visible(false)}
                 >
                 <p>
-                <Form onSubmit={() => this.handleSubmit()}>
+                <Form onSubmit={this.handleSubmit}>
                 <FormItem
                 {...formItemLayout}
                 label={(
@@ -119,7 +134,7 @@ class CreateModal extends Component {
                 )}
                 >
                 {getFieldDecorator('username', {
-                    rules: [{ required: false, message: 'Please input your username!', whitespace: true }],
+                    rules: [{ required: true, message: 'Please input your username!', whitespace: true }],
                 })(
                     <Input />
                 )}
@@ -132,23 +147,36 @@ class CreateModal extends Component {
                     rules: [{
                     type: 'email', message: 'The input is not valid E-mail!',
                     }, {
-                    required: false, message: 'Please input your E-mail!',
+                    required: true, message: 'Please input your E-mail!',
                     }],
                 })(
                     <Input />
                 )}
                 </FormItem>
                 <FormItem
-                {...formItemLayout}
-                label="isAdmin"
-                >
-                {getFieldDecorator('admin', {
-                    rules: [ {
-                    required: false, message: 'Please input your E-mail!',
-                    }],
-                })(
-                    <Switch onChange={this.ChangeAdmin} />,
-                )}
+                    {...formItemLayout}
+                    label="roles"
+                    >
+                    {getFieldDecorator('roles', {
+                        rules: [
+                            {
+                                type: "array"
+                            },
+                        {
+                        required: true, message: 'Please input your role!',
+                        }],
+                    })(
+                        
+                        <Tree
+                            checkable
+                            onSelect={this.onSelect}
+                            onCheck={this.onCheck}
+                      >
+                            <TreeNode title="user" key="USER"  />
+                            <TreeNode title="admin" key="ADMIN" />
+                            <TreeNode title="customer_service" key="CS  " />
+                      </Tree>
+                     )} 
                 </FormItem>
                 <FormItem
                 {...formItemLayout}
@@ -156,7 +184,7 @@ class CreateModal extends Component {
                 >
                 {getFieldDecorator('password', {
                     rules: [{
-                    required: false, message: 'Please input your password!',
+                    required: true, message: 'Please input your password!',
                     }, {
                     validator: this.validateToNextPassword,
                     }],
@@ -170,7 +198,7 @@ class CreateModal extends Component {
                     >
                     {getFieldDecorator('confirm', {
                         rules: [{
-                        required: false, message: 'Please confirm your password!',
+                        required: true, message: 'Please confirm your password!',
                         }, {
                         validator: this.compareToFirstPassword,
                         }],
@@ -183,7 +211,7 @@ class CreateModal extends Component {
                     label="Phone Number"
                     >
                     {getFieldDecorator('phone', {
-                        rules: [{ required: false, message: 'Please input your phone number!' }],
+                        rules: [{ required: true, message: 'Please input your phone number!' }],
                     })(
                         <Input style={{ width: '100%' }} />
                     )}
