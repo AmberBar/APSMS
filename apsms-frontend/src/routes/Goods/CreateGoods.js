@@ -8,6 +8,8 @@ export function CreateGoods({history, dispatch, goods}) {
 
     const createProps = {
         submit(values) {
+            console.log("***************")
+            console.log(values)
             dispatch({
                 type: "goods/createGoods",
                 payload: values

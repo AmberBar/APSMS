@@ -29,8 +29,6 @@ public class User implements Serializable {
     @NotBlank(message = "密码不能为空")
     @Column(name="password")
     private String password;
-//    @Column(name="is_admin")
-//    private boolean isAdmin;
     @Email(message = "email格式不正确")
     @Column(name="email")
     private String email;

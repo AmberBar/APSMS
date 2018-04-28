@@ -39,8 +39,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<User> queryAll(final User param, int pageNumber,int pageSize) {
-//        List<User> users = new ArrayList<User>();
-//        users = userRepository.findAll();
         Pageable pageable=new PageRequest(pageNumber, pageSize);  //分页信息
 
         Specification<User> spec = new Specification<User>() {        //查询条件构造
@@ -83,13 +81,9 @@ public class UserServiceImpl implements UserService {
     public User createUser(User user) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         user.setRegDate(new Date());
         String password = user.getPassword();
-//        password = Md5Util.EncoderByMd5(password);
-//        user.setPassword(password);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String rawPassword = user.getPassword();
         user.setPassword(encoder.encode(rawPassword));
-//        System.out.println("**************************************");
-//        System.out.print(user);
         List<Role> roles = user.getRoles();
         for (Role role: roles) {
             roleRepository.save(role);

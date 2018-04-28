@@ -73,11 +73,12 @@ export default {
           params = {...payload, ...params }
           const result = yield call(findAllUsers, params );
           if (result.data.success === true) {
+            console.log(result.data.data.content)
             yield put({
-                type: "save",
-                payload: {
-                  users: result.data.data.content
-                }
+              type: "save",
+              payload: {
+                users: result.data.data.content
+              }
           });
             let pageParams = {
               pageSize: result.data.data.size,

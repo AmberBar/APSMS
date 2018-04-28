@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="auto_parts")
+@Table(name="goods")
 public class Goods implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,13 +29,12 @@ public class Goods implements Serializable {
     @Column(name="parts_brand")
     private String brand;
 
-    @OneToMany
-    @JoinColumn(name = "parts_img", referencedColumnName = "id")
+    @OneToMany(cascade={CascadeType.ALL, CascadeType.REMOVE},fetch=FetchType.EAGER)
+    @JoinColumn(name = "goods_id", referencedColumnName = "id")
     private List<Img> imgs;
 
     @Column(name="parts_discription")
     private String discription;
-
     @Column(name="create_date")
     private Date createDate;
     @Column(name="parts_type")
@@ -93,11 +92,33 @@ public class Goods implements Serializable {
         this.type = type;
     }
 
-//    public List<String> getImg() {
-//        return img;
-//    }
-//
-//    public void setImg(List<String> img) {
-//        this.img = img;
-//    }
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public List<Img> getImgs() {
+        return imgs;
+    }
+
+    public void setImgs(List<Img> imgs) {
+        this.imgs = imgs;
+    }
+
+    @Override
+    public String toString() {
+        return "Goods{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", brand='" + brand + '\'' +
+                ", imgs=" + imgs +
+                ", discription='" + discription + '\'' +
+                ", createDate=" + createDate +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }

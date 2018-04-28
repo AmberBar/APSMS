@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import styles from './Users.less'
 import { Link } from 'react-router-dom'
-// import { Table, Input, Icon, Modal, Button, Form, Select} from 'antd';
 import { register } from '../../services/user';
 import Register from "../login/Register"
 import CreateModal from './CreateModal';
-import {Table, Modal, Form, Switch, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import * as moment from "moment"
+import {Table, Modal, Form, Switch, Input, Select, Button, AutoComplete } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
@@ -29,10 +29,14 @@ class Users extends Component {
     }
 
     componentWillReceiveProps(next) {
-    
+      let users = next.users
+      for (let i = 0; i < users.length; i ++) {
+        users[i].regDate = moment(users[i].regDate).format("YYYY-MM-DD")
+      }
+      
       this.setState({
         pagination: next.pagination,
-        dataSource: next.users
+        dataSource: users
       });
     }
 

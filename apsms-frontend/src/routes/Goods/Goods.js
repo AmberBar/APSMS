@@ -7,17 +7,43 @@ import styles from "./Goods.less"
 import AllGoods from "../../components/Goods/AllGoods"
 
 export function Goods({history, dispatch, goods}) {
-    const registerProps = {
-      
+    let { goodsList , pagination} = goods
+
+    const goodsProps = {
+        goodsList,
+        pagination,
+        changTablePagination(pagination) {
+            pagination.pageNumber = pagination.current - 1
+            dispatch({
+                type: "goods/pullData",
+                payload: 
+                    pagination
+            });
+        }
     }
     
+
+    const searchProps = {
+        search(values) {
+            let params = {
+                name: values
+            }
+            pagination = {...pagination, ...params}
+            dispatch({
+                type: "goods/pullData",
+                payload: 
+                    pagination
+            });
+        }
+    }
+
     return(
         <MainLayout >
             <div className={styles.search_container}>
-                <SearchContainer />
+                <SearchContainer {...searchProps}/>
             </div>
             <div className={styles.goods_container}>
-                <AllGoods />
+                <AllGoods {...goodsProps}/>
             </div>
         </MainLayout>
     );

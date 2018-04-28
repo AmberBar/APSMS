@@ -2,7 +2,7 @@ import fetch from 'dva/fetch';
 import axios from 'axios';
 import notie from 'notie';
 import { getAPIDomain } from '../utils/config.js';
-import { setcookie, localStorageService } from "../utils/common.js"
+import { localStorageService } from "../utils/common.js"
 
 function parseJSON(response) {
   return response.json();
@@ -10,7 +10,7 @@ function parseJSON(response) {
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
-    console.log(response)
+    // console.log(response)
     return response;
   }
 
@@ -21,12 +21,12 @@ function checkStatus(response) {
 
 export default function request(
     options, needToken = true) {  
-      console.log(options)
-      console.log(getAPIDomain())
+      // console.log(options)
+      // console.log(getAPIDomain())
     const token = localStorageService.getItem("user") != {}? localStorageService.getItem("user") : " ";
 
-    console.log("****************")
-    console.log(token)
+    // console.log("****************")
+    // console.log(token)
     let defaultOptions = {    
       baseURL: getAPIDomain(),    
       headers: {

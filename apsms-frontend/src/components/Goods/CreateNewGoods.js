@@ -1,11 +1,11 @@
-import { Form, Modal, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete ,Upload, message} from 'antd';
+import { Form, Modal, Input, Icon, Select, Button, AutoComplete ,Upload} from 'antd';
 import React, { Component } from 'react';
 import styles from "./CreateNewGoods.less"
+import { localStorageService } from "../../utils/common.js"
 
 const FormItem = Form.Item;
-const Option = Select.Option;
 const { TextArea } = Input;
-const AutoCompleteOption = AutoComplete.Option;
+// const AutoCompleteOption = AutoComplete.Option;
 
 class CreateNewGoods extends React.Component {
   constructor(props) {
@@ -13,23 +13,32 @@ class CreateNewGoods extends React.Component {
 
     this.state = {
       confirmDirty: false,
-      autoCompleteResult: [],
       loading: false,
-      fileList: [{
-        uid: -1,
-        name: 'xxx.png',
-        status: 'done',
-        url: 'http:127.0.0.1:8888/api/goods/upload/img',
-      }],
+      previewVisible: false,
+      previewImage: '',
+      fileList: [
+
+      ],
     }
   }
 
-  handleSubmit = () => {
+  handleSubmit = (e) => {
+    e.preventDefault();
+    
+    let fileNames = this.state.fileList.map((file) => {
+      return {
+        "name": "http://localhost/static/imgs" + file.name
+      }
+    });
+    console.log(fileNames)
     this.props.form.validateFields((err, values) => {
+      let files = {
+        "imgs": fileNames
+      }
       if (!err) {
+        values = {...values, ...files}
         this.props.submit(values);
-        // console.log('Received values of form: ', values);
-        
+        console.log('Received values of form: ', values); 
       }
     });
   }
@@ -39,9 +48,21 @@ class CreateNewGoods extends React.Component {
     console.log(`selected ${value}`);
   }
 
+  handleCancel = () => this.setState({ previewVisible: false })
+
+  handlePreview = (file) => {
+    this.setState({
+      previewImage: file.url || file.thumbUrl,
+      previewVisible: true,
+    });
+  }
+
+  handleChange = ({ fileList }) => this.setState({ fileList })
+
+
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { autoCompleteResult } = this.state;
+    // const { autoCompleteResult } = this.state;
 
     const formItemLayout = {
       labelCol: {
@@ -66,10 +87,58 @@ class CreateNewGoods extends React.Component {
       },
     };
 
+    const { previewVisible, previewImage, fileList } = this.state;
+    const uploadButton = (
+      <div>
+        <Icon type="plus" />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    );
+
+    const token = localStorageService.getItem("user") != {}? localStorageService.getItem("user") : " ";
+
+    let headers = {
+      'Authorization': 'Bearer ' + token,
+    }
+
+    let params = {
+      action: "http://127.0.0.1:8888/api/goods/upload/img/",
+      listType: "picture-card",
+      headers: headers,
+      fileList: this.state.fileList,
+      onPreview: this.handlePreview,
+      onChange: this.handleChange,
+    }
+
     return (
       <div className={styles.create_goods_container}>
         
         <Form onSubmit={this.handleSubmit}>
+          <FormItem
+              {...formItemLayout}
+              label={(
+                <span>
+                  img&nbsp;
+                </span>
+              )}
+            >
+              {getFieldDecorator('imgs', {
+                rules: [
+                  { required: true, message: 'Please upload your img!'}
+                ],
+              })(
+                <div className="clearfix">
+                  <Upload
+                    { ...params }
+                  >
+                    {this.state.fileList.length >= 5 ? null : uploadButton}
+                  </Upload>
+                  <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
+                    <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                  </Modal>
+              </div>
+              )}
+            </FormItem>
           <FormItem
           {...formItemLayout}
           label={(
@@ -84,27 +153,6 @@ class CreateNewGoods extends React.Component {
             <Input />
           )}
         </FormItem>
-
-          {/* <FormItem
-            {...formItemLayout}
-            label={(
-              <span>
-                img&nbsp;
-              </span>
-            )}
-          >
-            {getFieldDecorator('img', {
-              rules: [{ required: true, message: 'Please upload your img!'}],
-            })(
-              <Input />
-            //   <Upload {...props}>
-            //   <Button>
-            //     <Icon type="upload" /> upload
-            //   </Button>
-            // </Upload>
-  
-            )}
-          </FormItem> */}
           <FormItem
             {...formItemLayout}
             label={(
@@ -131,18 +179,7 @@ class CreateNewGoods extends React.Component {
             {getFieldDecorator('brand', {
               rules: [{ required: false, message: 'Please input goods brand!' }],
             })(
-              <Select
-                showSearch
-                style={{ width: 200 }}
-                placeholder="Select a person"
-                optionFilterProp="children"
-                onChange={this.handleChange}
-                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-            >
-              <Option value="Mercedes">Mercedes</Option>
-              <Option value="BMW">BMW</Option>
-              <Option value="mitsubishi">mitsubishi</Option>
-            </Select>
+             <Input />
             )}
           </FormItem>
          

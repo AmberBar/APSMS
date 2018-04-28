@@ -33,8 +33,6 @@ export default {
 
         *registerUser({ payload }, { put, call }) {    
           const data = yield call(register, payload);
-          console.log("data")
-          console.log(data.data.success)
           if (data.data.success === true ) {
             yield put(routerRedux.push('/apsms'));
           } else {
