@@ -40,6 +40,14 @@ function RouterConfig({ history}) {
         models: () => [import('./models/Goods/goods')],
         component: () => import('./routes/Goods/CreateGoods'),
       }
+
+      ,
+
+      {
+        path: `/goods/edit`,
+        models: () => [import('./models/Goods/goods')],
+        component: () => import('./routes/Goods/EditGoods'),
+      }
     ]
     return (
       <Router history={history}>

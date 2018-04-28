@@ -16,3 +16,18 @@ export async function findAllGoods(params) {
     params: params
   })
 }
+
+export async function deleteData(params) {
+  return request({
+    url: `/goods/delete`,
+    method: `delete`,
+    data: params
+  })
+}
+
+export async function getGoods(params) {
+  return request({
+    url: `/goods/getGoods`,
+    params: params
+  })
+}

@@ -11,4 +11,8 @@ public interface GoodService {
     public Goods createGood(Goods autoParts);
 
     Page<Goods> queryAll(final Goods goods, int pageNumber, int pageSize);
+
+    void delete(Goods goods);
+
+    Goods getGoodsById(Integer id);
 }

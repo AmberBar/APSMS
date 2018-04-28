@@ -31,6 +31,14 @@ class AllGoods extends Component {
       });
     }
 
+    handleDelete(index) {
+      this.props.delete(index)
+    }
+
+    indexData(index) {
+      this.props.edit(index)
+    }
+
     render() {
       const columns = [
       {
@@ -75,9 +83,11 @@ class AllGoods extends Component {
       {
         title: 'Action',
         key: 'action',
-        render: (text, record, index) => (
+        render: (text, record, index) => (      
           <span>
-            <Button type="primary" size="small" onClick={() => this.indexData(index)}>Edit</Button>
+            <Link to={"goods/edit?id=" + this.state.dataSource[index].id}>
+              <Button type="primary" size="small" >Edit</Button>
+            </Link>
             <Button type="primary" size="small" className={styles.action_button} size="small" onClick={() => this.handleDelete(index)}>Delete</Button>
           </span>
         ),

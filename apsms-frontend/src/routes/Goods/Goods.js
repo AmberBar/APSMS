@@ -19,6 +19,22 @@ export function Goods({history, dispatch, goods}) {
                 payload: 
                     pagination
             });
+        },
+        delete(index) {
+            let params = goodsList[index]
+            dispatch({
+                type: "goods/delete",
+                payload: 
+                    params
+            });
+        },
+        edit(index) {
+            let params = goodsList[index]
+            dispatch({
+                type: "goods/edit",
+                payload: 
+                    params.id
+            }); 
         }
     }
     

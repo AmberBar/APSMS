@@ -1,5 +1,5 @@
-import { createGoods, findAllGoods } from "../../services/goods.js"
-import { setcookie } from "../../utils/common.js"
+import { createGoods, findAllGoods, deleteData, getGoods} from "../../services/goods.js"
+import { getQueryString } from "../../utils/common.js"
 import { routerRedux } from 'dva/router';
 import { message, Select } from "antd";
 
@@ -9,13 +9,12 @@ export default {
   
     state: {
       goodsList: [],
-      pagination: {
-        
-      }
+      pagination: {},
+      goodsDetail: {},
     },
   
     subscriptions: {
-      setup({ dispatch, history }) {  
+      setup({ dispatch, history}) {  
         history.listen(location => {
           if (location.pathname === "/goods") {
             dispatch({
@@ -24,8 +23,18 @@ export default {
                 pagination: {
                   name: "",
                   pageNumber: 0,
-                  pageSize: 2,
+                  pageSize: 10,
                 }
+              }
+            });
+          }
+
+          if (location.pathname === "/goods/edit") {
+            let id = getQueryString("id", location)
+            dispatch({
+              type: 'findOne',
+              payload: {
+                id: id
               }
             });
           }
@@ -35,25 +44,6 @@ export default {
   
     effects: {
         *init({ payload }, { call, put }) {
-
-          // let params = payload
-          // const result = yield call(findAllGoods, params);
-          // if (result.data.success === true) {
-          //   let goods = result.data.data.content
-          //   console.log(result.data.data)
-          //   let pagination = yield select(state=>state.goods.pagination)
-          //   let params = {
-              
-          //   }
-          //   yield put({
-          //     type: "save",
-          //     payload: {
-          //       goodsList: goods
-          //     }
-          // });
-          // } else {
-          //   message.error(result.data.data)
-          // }
           yield put({
             type: "save",
             payload: {
@@ -68,9 +58,6 @@ export default {
         *pullData({ payload }, { put, call, select }){
           let params = payload
           let pagination = yield select(state=>state.goods.pagination)
-          // let paginationCopy = {
-          //   pageNumber: params.
-          // }
           const result = yield call(findAllGoods, params);
           if (result.data.success === true) {
             let goods = result.data.data.content
@@ -100,6 +87,34 @@ export default {
           } else {
             message.error(result.data.data)
           }
+        },
+        *delete({ payload }, { put, call }) {
+          const result = yield call(deleteData, payload);
+          if (result.data.success === true) {
+            message.success(result.data.data)
+            yield put(routerRedux.push('/goods'));
+          } else {
+            message.error(result.data.data)
+          }
+        },
+        *findOne({ payload }, { put, call }) {
+          let result = yield call(getGoods, payload)
+          if (result.data.success === true) {
+            console.log("///////////////////")
+            console.log(result.data.data)
+            yield put({
+              type: "save",
+              payload: {
+                goodsDetail: result.data.data
+              }
+            })
+            // yield put(routerRedux.push('/goods'));
+          } else {
+            message.error(result.data.data)
+          }
+        },
+        *edit({ payload }, { put, call }) {
+          // yield put(routerRedux.push('/goods/edit', {id: payload}));
         }
     },
   

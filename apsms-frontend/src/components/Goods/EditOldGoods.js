@@ -2,12 +2,13 @@ import { Form, Modal, Input, Icon, Select, Button, AutoComplete ,Upload} from 'a
 import React, { Component } from 'react';
 import styles from "./CreateNewGoods.less"
 import { localStorageService } from "../../utils/common.js"
+import { isArray } from 'util';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
 // const AutoCompleteOption = AutoComplete.Option;
 
-class CreateNewGoods extends React.Component {
+class EditOldGoods extends React.Component {
   constructor(props) {
     super(props);
 
@@ -20,6 +21,16 @@ class CreateNewGoods extends React.Component {
 
       ],
     }
+  }
+
+  componentWillReceiveProps(next) {
+    let imgs = next.goodsDetail.imgs
+    let fileList = {...this.state.fileList, ...imgs}
+    
+    console.log(isArray(next.goodsDetail.imgs))
+    // this.setState({
+    //   fileList: imgs
+    // })
   }
 
   handleSubmit = (e) => {
@@ -41,11 +52,6 @@ class CreateNewGoods extends React.Component {
         console.log('Received values of form: ', values); 
       }
     });
-  }
-  
-
-   handleChange = (value) => {
-    console.log(`selected ${value}`);
   }
 
   handleCancel = () => this.setState({ previewVisible: false })
@@ -109,6 +115,8 @@ class CreateNewGoods extends React.Component {
       onChange: this.handleChange,
     }
 
+    let {goodsDetail} = this.props
+
     return (
       <div className={styles.create_goods_container}>
         
@@ -148,6 +156,7 @@ class CreateNewGoods extends React.Component {
         >
           {getFieldDecorator('name', {
             rules: [{ required: false, message: 'Please input your nickname!'}],
+            initialValue: goodsDetail.name
           })(
             <Input />
           )}
@@ -162,6 +171,7 @@ class CreateNewGoods extends React.Component {
           >
             {getFieldDecorator('price', {
               rules: [{ required: false, message: 'Please input goods price!' }],
+              initialValue: goodsDetail.price
             })(
               <Input />
             )}
@@ -177,6 +187,7 @@ class CreateNewGoods extends React.Component {
           >
             {getFieldDecorator('brand', {
               rules: [{ required: false, message: 'Please input goods brand!' }],
+              initialValue: goodsDetail.brand
             })(
              <Input />
             )}
@@ -192,6 +203,7 @@ class CreateNewGoods extends React.Component {
           >
             {getFieldDecorator('discription', {
               rules: [{ required: false, message: 'Please input your discription!'}],
+              initialValue: goodsDetail.discription
             })(
               <TextArea rows={4} />
             )}
@@ -206,6 +218,7 @@ class CreateNewGoods extends React.Component {
           >
             {getFieldDecorator('type', {
               rules: [{ required: false, message: 'Please input your nickname!' }],
+              initialValue: goodsDetail.type
             })(
               <Input />
             )}
@@ -219,6 +232,6 @@ class CreateNewGoods extends React.Component {
   }
 }
 
-CreateNewGoods = Form.create()(CreateNewGoods);
+EditOldGoods = Form.create()(EditOldGoods);
 
-export default CreateNewGoods;
+export default EditOldGoods;

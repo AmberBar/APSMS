@@ -1,4 +1,13 @@
 
+export function getQueryString(name, location) {
+    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+    var r = location.search.substr(1).match(reg);
+    if (r != null) {
+      return unescape(r[2]);
+    }
+    return null;
+}
+  
 export   function setcookie(name,value,day){
     var expdate=new Date();  
     var outms=day*24*60*60*1000;//过期时间，以天为单位‘1’表示一天  

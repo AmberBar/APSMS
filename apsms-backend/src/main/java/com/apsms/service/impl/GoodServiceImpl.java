@@ -44,4 +44,14 @@ public class GoodServiceImpl implements GoodService {
 
         return goodsRepository.findAll( spec,pageable);
     }
+
+    @Override
+    public void delete(Goods goods) {
+        goodsRepository.delete(goods);
+    }
+
+    @Override
+    public Goods getGoodsById(Integer id) {
+        return goodsRepository.findOne(id);
+    }
 }

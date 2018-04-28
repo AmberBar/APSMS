@@ -36,6 +36,19 @@ public class GoodsController {
         return new JsonResponse(true, newGoods);
     }
 
+    @GetMapping("/getGoods")
+    public JsonResponse getGoods(@RequestParam("id") Integer id) {
+        Goods newGoods = goodService.getGoodsById(id);
+        return new JsonResponse(true, newGoods);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/delete")
+    public JsonResponse delete(@Valid @RequestBody Goods goods) {
+        goodService.delete(goods);
+        return new JsonResponse(true, "delete success");
+    }
+
     @PostMapping("/findAll")
     public JsonResponse createGoods(
             @RequestParam(value = "name") String name,
