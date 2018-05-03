@@ -29,7 +29,10 @@ class SiderLayout extends Component {
                 <Link to="/login"><Icon type="bars" />Login</Link>
             </Menu.Item>
             <Menu.Item key="home">
-                <Icon type="home" />home
+                <Link to="/apsms">
+                    <Icon type="home" />
+                    Home
+                </Link>  
             </Menu.Item>
             <Menu.Item key="shopping_cart">
                 <Icon type="shopping_cart" />shoppingCart

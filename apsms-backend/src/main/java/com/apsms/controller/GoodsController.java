@@ -63,6 +63,16 @@ public class GoodsController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/update")
+    public JsonResponse edit(
+           @RequestBody Goods goods
+    ) {
+        System.out.println(goods);
+        goodService.createGood(goods);
+        return new JsonResponse(true, "update success!");
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/upload/img")
     public JsonResponse upload(
             @RequestParam(value = "file", required = false) MultipartFile file

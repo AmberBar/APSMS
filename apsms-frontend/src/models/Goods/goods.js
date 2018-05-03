@@ -1,4 +1,4 @@
-import { createGoods, findAllGoods, deleteData, getGoods} from "../../services/goods.js"
+import { createGoods, findAllGoods, deleteData, getGoods, editParams} from "../../services/goods.js"
 import { getQueryString } from "../../utils/common.js"
 import { routerRedux } from 'dva/router';
 import { message, Select } from "antd";
@@ -100,21 +100,24 @@ export default {
         *findOne({ payload }, { put, call }) {
           let result = yield call(getGoods, payload)
           if (result.data.success === true) {
-            console.log("///////////////////")
-            console.log(result.data.data)
             yield put({
               type: "save",
               payload: {
                 goodsDetail: result.data.data
               }
             })
-            // yield put(routerRedux.push('/goods'));
           } else {
             message.error(result.data.data)
           }
         },
         *edit({ payload }, { put, call }) {
-          // yield put(routerRedux.push('/goods/edit', {id: payload}));
+          let result = yield call(editParams, payload)
+          if (result.data.success === true) {
+            message.success(result.data.data)
+            yield put(routerRedux.push('/goods'));
+          } else {
+            message.error(result.data.data)
+          }
         }
     },
   

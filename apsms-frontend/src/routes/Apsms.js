@@ -7,17 +7,41 @@ import GoodsContainer from '../components/Mall/GoodsContainer';
 import styles from "./Apsms.less"
 
 export function Apsms({history, dispatch, apsms}) {
-    const registerProps = {
-      
+    let { goodsList, pagination } = apsms
+    const apsmaProps = {
+        goodsList,
+        pagination,
+        changTablePagination(pagination) {
+            pagination.pageNumber = pagination.current - 1
+            dispatch({
+                type: "apsms/pullData",
+                payload: 
+                    pagination
+            });
+        },
+    }
+
+    const searchProps = {
+        search(values) {
+            let params = {
+                name: values
+            }
+            pagination = {...pagination, ...params}
+            dispatch({
+                type: "apsms/pullData",
+                payload: 
+                    pagination
+            });
+        }
     }
     
     return(
         <MainLayout >
             <div className={styles.search_container}>
-                <SearchContainer />
+                <SearchContainer { ...searchProps}/>
             </div>
             <div className={styles.goods_container}>
-                <GoodsContainer />
+                <GoodsContainer {...apsmaProps}/>
             </div>
         </MainLayout>
     );

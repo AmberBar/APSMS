@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends JpaRepository<User,String>, JpaSpecificationExecutor<User> {
+public interface UserRepository extends JpaRepository<User,Integer>, JpaSpecificationExecutor<User> {
 
     @Query(value = "select * from user b where b.username like %?1%", nativeQuery = true)
     List<User> fuzzyQueryByName(String name);

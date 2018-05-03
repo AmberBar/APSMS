@@ -40,13 +40,17 @@ function RouterConfig({ history}) {
         models: () => [import('./models/Goods/goods')],
         component: () => import('./routes/Goods/CreateGoods'),
       }
-
       ,
-
       {
         path: `/goods/edit`,
         models: () => [import('./models/Goods/goods')],
         component: () => import('./routes/Goods/EditGoods'),
+      }
+      ,
+      {
+        path: `/apsms/detail`,
+        models: () => [import('./models/Goods/goods_detail')],
+        component: () => import('./routes/Goods/GoodsDetail'),
       }
     ]
     return (

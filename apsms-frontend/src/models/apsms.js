@@ -1,23 +1,28 @@
 import { checkLogin } from "../services/user.js"
 import { message } from "antd";
+import { findAllGoods } from "../services/goods.js"
 
 export default {
 
     namespace: 'apsms',
   
     state: {
-      username: ''
+      pagination: {},
+      goodsList: []
     },
   
     subscriptions: {
       setup({ dispatch, history }) {  
-          // eslint-disable-line
           history.listen(location => {
-            if (location.pathname === "/login") {
+            if (location.pathname === "/apsms") {
               dispatch({
                 type: 'init',
                 payload: {
-
+                  pagination: {
+                    name: "",
+                    pageNumber: 0,
+                    pageSize: 6,
+                  }
                 }
               });
             }
@@ -26,22 +31,43 @@ export default {
     },
   
     effects: {
-        *init({ payload }, { call, put }) {
-
-          yield call();
-            yield put({
-                type: "save",
-                payload: {}
-            });
-        },
-        *checkLogin({ payload }, { put, call }) {
-          const result = yield call(checkLogin  , payload.values);
-          if (result.data.success === true) {
-            
-          } else {
-            message.error(result.data.data)
+      *init({ payload }, { call, put }) {
+        yield put({
+          type: "save",
+          payload: {
+            pagination: payload.pagination
           }
+        });
+        yield put({
+          type: "pullData",
+          payload: payload.pagination
+        });
+      },
+      *pullData({ payload }, { put, call, select }){
+        let params = payload
+        let pagination = yield select(state=>state.apsms.pagination)
+        const result = yield call(findAllGoods, params);
+        if (result.data.success === true) {
+          let goods = result.data.data.content
+          console.log(result.data.data)
+          let params = {
+            pageNumber: result.data.data.number,
+            total: result.data.data.totalElements,
+            current: Number(result.data.data.number) + 1,
+          }
+          pagination = {...pagination, ...params}
+          yield put({
+            type: "save",
+            payload: {
+              goodsList: goods,
+              pagination: pagination
+            }
+        });
+        } else {
+          message.error(result.data.data)
         }
+      },
+
     },
   
     reducers: {

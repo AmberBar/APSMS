@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 import styles from "./CreateNewGoods.less"
 import { localStorageService } from "../../utils/common.js"
 import { isArray } from 'util';
+import { isString } from 'util';
+import { upload_img } from "../../utils/config"
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
-// const AutoCompleteOption = AutoComplete.Option;
 
 class EditOldGoods extends React.Component {
   constructor(props) {
@@ -17,34 +18,58 @@ class EditOldGoods extends React.Component {
       loading: false,
       previewVisible: false,
       previewImage: '',
-      fileList: [
-
-      ],
+      fileList: [],
+      oldFileList: [],
+      goodsDetail: {}
     }
   }
 
-  componentWillReceiveProps(next) {
-    let imgs = next.goodsDetail.imgs
-    let fileList = {...this.state.fileList, ...imgs}
-    
-    console.log(isArray(next.goodsDetail.imgs))
-    // this.setState({
-    //   fileList: imgs
-    // })
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps.goodsDetail)
+    if (nextProps.goodsDetail.imgs) {  
+      const imgs = nextProps.goodsDetail.imgs.map((img) => {
+          return {
+            uid: img.id,
+            url: img.name
+          }
+      })
+
+      this.setState({
+        fileList: imgs,
+        oldFileList: nextProps.goodsDetail.imgs,
+       
+      })
+    }
+
+    this.setState({
+     
+      goodsDetail:  nextProps.goodsDetail
+    })
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
     
-    let fileNames = this.state.fileList.map((file) => {
+    let fileNames = this.state.fileList.map((file, index) => {
+      if (!file.name) {
+        return this.state.oldFileList[index]
+      }
+      
+      if (isString(file.uid)) {
+        return {
+          name: upload_img + file.name
+        }
+      }
       return {
-        "name": "http://localhost/static/imgs" + file.name
+        id: file.uid,
+        name: upload_img + file.name
       }
     });
-    console.log(fileNames)
+    
     this.props.form.validateFields((err, values) => {
       let files = {
-        "imgs": fileNames
+        "imgs": fileNames,
+        createDate: this.state.goodsDetail.createDate
       }
       if (!err) {
         values = {...values, ...files}
@@ -131,17 +156,23 @@ class EditOldGoods extends React.Component {
             >
               {getFieldDecorator('imgs', {
                 rules: [
-                  { required: true, message: 'Please upload your img!'}
+                  { required: false}
                 ],
+                // initialValue: ""
               })(
                 <div className="clearfix">
+                  {/* <img src="http://localhost:8888/static/imgs/2.png"/> */}
                   <Upload
                     { ...params }
                   >
                     {this.state.fileList.length >= 5 ? null : uploadButton}
                   </Upload>
                   <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
-                    <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                    <img 
+                    alt="example"
+                    style={{ width: '100%' }} 
+                    src={this.state.previewImage} 
+                    />
                   </Modal>
               </div>
               )}
@@ -226,6 +257,15 @@ class EditOldGoods extends React.Component {
           <FormItem {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">Register</Button>
           </FormItem>
+          <FormItem
+          >
+            {getFieldDecorator('id', {
+              rules: [{ required: false}],
+              initialValue: goodsDetail.id
+            })(
+              <div></div>
+            )}
+        </FormItem>
         </Form>
       </div>
     );

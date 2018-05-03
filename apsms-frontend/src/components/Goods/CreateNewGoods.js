@@ -27,7 +27,7 @@ class CreateNewGoods extends React.Component {
     
     let fileNames = this.state.fileList.map((file) => {
       return {
-        "name": "http://localhost/static/imgs" + file.name
+        "name": "http://localhost:8888/static/imgs/" + file.name
       }
     });
     console.log(fileNames)

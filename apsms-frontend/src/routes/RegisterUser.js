@@ -8,7 +8,7 @@ export function RegisterUser({history, dispatch, register}) {
         submit(values) {
             let params = {
                 "roles": [{
-                    "name": "USER"
+                    "name": "ROLE_USER"
                 }]
             }
             delete values.confirm

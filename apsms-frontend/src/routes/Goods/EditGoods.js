@@ -12,10 +12,10 @@ export function EditGoods({history, dispatch, goods}) {
         submit(values) {
             console.log("***************")
             console.log(values)
-            // dispatch({
-            //     type: "goods/createGoods",
-            //     payload: values
-            // });
+            dispatch({
+                type: "goods/edit",
+                payload: values
+            });
         }
     }
 

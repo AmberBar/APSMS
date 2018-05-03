@@ -63,8 +63,7 @@ public class UserController {
         if (user == null) {
             throw  new IllegalArgumentException("username or password is wrong");
         }
-
-
+        
         UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken( username, password);
 
         Authentication authentication = authenticationManager.authenticate(upToken);
@@ -92,7 +91,6 @@ public class UserController {
             ) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         User oldUser = userService.findUserByName(user.getUsername());
 
-        System.out.println(user);
         if (oldUser != null) {
             throw new IllegalArgumentException("username is exit");
         }

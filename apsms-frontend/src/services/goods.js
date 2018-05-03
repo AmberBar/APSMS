@@ -28,6 +28,15 @@ export async function deleteData(params) {
 export async function getGoods(params) {
   return request({
     url: `/goods/getGoods`,
+    method: 'get',
     params: params
+  })
+}
+
+export async function editParams(params) {
+  return request({
+    url: `/goods/update`,
+    data: params,
+    method: "put"
   })
 }
