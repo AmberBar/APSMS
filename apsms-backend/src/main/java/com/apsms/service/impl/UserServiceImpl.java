@@ -1,18 +1,18 @@
 package com.apsms.service.impl;
 
-import com.apsms.modal.JsonResponse;
-import com.apsms.modal.Role;
-import com.apsms.modal.User;
+import com.apsms.modal.user.Role;
+import com.apsms.modal.user.User;
 import com.apsms.repository.RoleRepository;
 import com.apsms.repository.UserRepository;
 import com.apsms.service.UserService;
 import com.apsms.utils.JwtTokenUtil;
-import com.apsms.utils.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +20,11 @@ import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Service
 @Transactional
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -36,6 +35,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+
+
 
     @Override
     public Page<User> queryAll(final User param, int pageNumber,int pageSize) {
@@ -112,5 +113,19 @@ public class UserServiceImpl implements UserService {
             return jwtTokenUtil.refreshToken(token);
         }
         return "error";
+    }
+
+    @Override
+    public User getCurrentUser() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication() .getPrincipal();
+
+        User user = userRepository.findByUsername(userDetails.getUsername());
+        return user;
+    }
+
+    @Override
+    public String getJwtToken(String username, String password) {
+
+        return null;
     }
 }

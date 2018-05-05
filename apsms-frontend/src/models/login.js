@@ -37,10 +37,12 @@ export default {
         *checkLogin({ payload }, { put, call }) {
           const result = yield call(checkLogin  , payload.values);
           if (result.data.success === true) {
+            localStorageService.setItem("user", result.data.data);
+            
             yield put(routerRedux.push('/apsms'));
           //  yield call(setcookie, "user" ,result.data.data)
             //把用户信息放到cookies
-          localStorageService.setItem("user", result.data.data);
+          
           } else {
             message.error(result.data.data)
           }

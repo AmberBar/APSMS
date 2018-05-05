@@ -1,10 +1,9 @@
 package com.apsms.service;
 
-import com.apsms.modal.User;
+import com.apsms.modal.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -27,4 +26,8 @@ public interface UserService {
     public User updateUser(User user);
 
     public String refreshToken(String oldToken);
+
+    public User getCurrentUser();
+
+    String getJwtToken(String username, String password);
 }

@@ -1,14 +1,34 @@
 import React from 'react'
-import { connect } from 'dva';
-import MainLayout from '../../components/MainLayout/MainLayout';
-import styles from "./CreateGoods.less"
+import { connect } from 'dva'
+import MainLayout from '../../components/MainLayout/MainLayout'
 import Goods from "../../components/Mall/GoodsDetail"
 
 export function GoodsDetail({history, dispatch, goods_detail}) {
 
     let { goodsDetail } = goods_detail
-    const editProps = {
-        goodsDetail
+
+    const detailProps = {
+        goodsDetail,
+        addCard(number) {
+            let params = {
+                goods: goodsDetail,
+                number: number
+            }
+            dispatch({
+                type: "goods_detail/addGoodsToCart",
+                payload: params
+            })
+        },
+        buyNow(number) {
+            let params = {
+                goods: goodsDetail,
+                number: number
+            }
+            dispatch({
+                type: "goods_detail/buyNowCart",
+                payload: params
+            })
+        }
         // submit(values) {
         //     console.log("***************")
         //     console.log(values)
@@ -21,7 +41,7 @@ export function GoodsDetail({history, dispatch, goods_detail}) {
 
     return(
         <MainLayout >
-            <Goods {...editProps}/>
+            <Goods {...detailProps}/>
         </MainLayout>
     );
 }

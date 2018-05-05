@@ -52,6 +52,30 @@ function RouterConfig({ history}) {
         models: () => [import('./models/Goods/goods_detail')],
         component: () => import('./routes/Goods/GoodsDetail'),
       }
+      ,
+      {
+        path: `/order/confirm`,
+        models: () => [import('./models/Order/order_confirm')],
+        component: () => import('./routes/Order/OrderConfirm'),
+      }
+      ,
+      {
+        path: `/personal/information`,
+        models: () => [import('./models/PersonalCenter/information')],
+        component: () => import('./routes/PersonalCenter/Information'),
+      }
+      ,
+      {
+        path: `/orders`,
+        models: () => [import('./models/Order/orders')],
+        component: () => import('./routes/Order/orders'),
+      }
+      ,
+      {
+        path: `/shoppingCart`,
+        models: () => [import('./models/Order/shopping_cart')],
+        component: () => import('./routes/Order/ShoppingCart'),
+      }
     ]
     return (
       <Router history={history}>

@@ -28,14 +28,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService userDetailsService;
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
-
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     public WebSecurityConfig(UserDetailsService userDetailsService, JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter) {
         this.userDetailsService = userDetailsService;
         this.jwtAuthenticationTokenFilter = jwtAuthenticationTokenFilter;
-
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
@@ -55,6 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers( HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/api/users/create").permitAll()
                 .antMatchers("/api/users/login").permitAll()
+                .antMatchers("/api/goods/findAll").permitAll()
                 .antMatchers("/static/**").permitAll()
                 .anyRequest().authenticated();
         httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);

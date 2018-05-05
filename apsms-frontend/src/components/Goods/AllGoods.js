@@ -76,7 +76,7 @@ class AllGoods extends Component {
         dataIndex: 'createDate',
         render: (text, record, index) => (
           <span>
-          {moment(text.createDate).format("YYYY-MM-DD")}
+            {moment(text.createDate).format("YYYY-MM-DD")}
           </span>
         ),
       },

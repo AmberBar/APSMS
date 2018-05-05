@@ -1,10 +1,11 @@
-package com.apsms.modal;
+package com.apsms.modal.mall;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name="img")
-public class Img {
+public class Img implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

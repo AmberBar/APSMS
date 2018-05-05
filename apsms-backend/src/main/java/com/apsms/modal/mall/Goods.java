@@ -1,10 +1,9 @@
-package com.apsms.modal;
+package com.apsms.modal.mall;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -12,10 +11,9 @@ import java.util.List;
 @Table(name="goods")
 public class Goods implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = 1377742192916480637L;
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
 
@@ -29,7 +27,8 @@ public class Goods implements Serializable {
     @Column(name="parts_brand")
     private String brand;
 
-    @OneToMany(cascade={CascadeType.ALL, CascadeType.REMOVE},fetch=FetchType.EAGER)
+//    @OneToMany(cascade={CascadeType.ALL, CascadeType.REMOVE},fetch=FetchType.EAGER)
+    @OneToMany(cascade={CascadeType.ALL})
     @JoinColumn(name = "goods_id", referencedColumnName = "id")
     private List<Img> imgs;
 

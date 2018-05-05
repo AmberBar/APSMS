@@ -1,4 +1,4 @@
-package com.apsms.modal;
+package com.apsms.modal.user;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -6,8 +6,9 @@ import java.io.Serializable;
 @Entity
 @Table(name="roles")
 public class Role implements Serializable {
-    private static final long serialVersionUID = 1L;
 
+
+    private static final long serialVersionUID = -6430077709257704179L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

@@ -1,7 +1,6 @@
 package com.apsms.service;
 
-import com.apsms.modal.Goods;
-import com.apsms.modal.User;
+import com.apsms.modal.mall.Goods;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 

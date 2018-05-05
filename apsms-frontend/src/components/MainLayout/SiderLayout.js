@@ -35,16 +35,25 @@ class SiderLayout extends Component {
                 </Link>  
             </Menu.Item>
             <Menu.Item key="shopping_cart">
-                <Icon type="shopping_cart" />shoppingCart
+                <Link to="shoppingCart">
+                    <Icon type="shopping_cart" />shoppingCart
+                </Link>
             </Menu.Item>
     
             <Menu.Item key="customer_service">
                 <Icon type="customer_service" />Customer service
             </Menu.Item>
             <Menu.Item key="personal_information">
-                <Icon type="personal_information" />Personal information
+                <Link to="/personal/information">
+                    <Icon type="personal_information" />Personal information
+                </Link>
             </Menu.Item>
             <SubMenu key="order" title={<span><Icon type="user" />My order</span>}>
+                <Menu.Item key="all_Order">
+                    <Link to="/orders">
+                        All Order
+                    </Link>
+                </Menu.Item>
                 <Menu.Item key="1">finished order</Menu.Item>
                 <Menu.Item key="2">unfinished order</Menu.Item>
             </SubMenu>

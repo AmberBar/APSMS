@@ -1,7 +1,9 @@
 package com.apsms.repository;
 
-import com.apsms.modal.Role;
+import com.apsms.modal.user.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface RoleRepository extends JpaRepository<Role,String> {
+@Repository
+public interface RoleRepository extends JpaRepository<Role,Integer> {
 }

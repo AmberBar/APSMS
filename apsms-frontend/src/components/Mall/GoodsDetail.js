@@ -8,23 +8,40 @@ class GoodsDetail extends Component {
     constructor(props) {
       super(props);
       this.state = {
-        goodsDetail: this.props.goodsDetail
+        goodsDetail: this.props.goodsDetail,
+        number: 1
       }
     }
 
     componentWillReceiveProps(nextProps) {
       this.setState({
-        goodsDetail: nextProps.goodsDetail
+        goodsDetail: nextProps.goodsDetail, 
       })
-
-      console.log(nextProps.goodsDetail)
-      console.log(nextProps.goodsDetail.imgs)
-      console.log(isArray(nextProps.goodsDetail.imgs[0]))
-      console.log(nextProps.goodsDetail.imgs[0].name)
     }
 
     onChange = (value) => {
+      this.setState({
+        number: value
+      })
       console.log('changed', value);
+    }
+
+    handleAddCart = () => {
+      let number = this.state.number
+      if (number >= 1) {
+        if (this.props.addCard) {
+          this.props.addCard(number)
+        }
+      }
+    }
+
+    handleBuyNow = () => {
+      let number = this.state.number
+      if (number >= 1) {
+        if (this.props.addCard) {
+          this.props.buyNow(number)
+        }
+      }
     }
 
     render() {
@@ -44,8 +61,8 @@ class GoodsDetail extends Component {
                 <img src={goodsDetail.imgs[0].name} />
               </div>
               <div className={styles.goods_picture_img_list}>
-                {goodsDetail.imgs.map((img) => {
-                  return <img src={img.name} />
+                {goodsDetail.imgs.map((img, index) => {
+                  return <img src={img.name} key={index}/>
                 })}
               </div>
             </div>
@@ -57,10 +74,10 @@ class GoodsDetail extends Component {
                 Number: <InputNumber min={1} max={10} defaultValue={1} onChange={this.onChange} />
               </div>
               <div className={styles.confirm}>
-                <Button type="primary" size="large" className={styles.confirm_button1}>
+                <Button type="primary" size="large" className={styles.confirm_button1} onClick={this.handleBuyNow}>
                   Buy now
                 </Button>
-                <Button　type="primary" size="large" className={styles.confirm_button2}>
+                <Button　type="primary" size="large" className={styles.confirm_button2} onClick={this.handleAddCart}>
                   Add to cart
                 </Button>
               </div>

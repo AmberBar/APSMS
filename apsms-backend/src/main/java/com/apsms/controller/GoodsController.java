@@ -1,10 +1,8 @@
 package com.apsms.controller;
 
-import com.apsms.modal.Goods;
+import com.apsms.modal.mall.Goods;
 import com.apsms.modal.JsonResponse;
-import com.apsms.modal.User;
 import com.apsms.service.GoodService;
-import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;

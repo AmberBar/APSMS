@@ -1,7 +1,11 @@
 package com.apsms.modal;
 
-public class JsonResponse {
+import java.io.Serializable;
 
+public class JsonResponse implements Serializable {
+
+
+    private static final long serialVersionUID = -899442115821961167L;
     private boolean success;
     private Object data;
 

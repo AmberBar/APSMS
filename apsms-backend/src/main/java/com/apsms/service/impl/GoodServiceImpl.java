@@ -1,6 +1,6 @@
 package com.apsms.service.impl;
 
-import com.apsms.modal.Goods;
+import com.apsms.modal.mall.Goods;
 import com.apsms.repository.GoodsRepository;
 import com.apsms.service.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;

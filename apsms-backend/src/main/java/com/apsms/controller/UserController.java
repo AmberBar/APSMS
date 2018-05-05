@@ -1,11 +1,9 @@
 package com.apsms.controller;
 
 import com.apsms.modal.JsonResponse;
-import com.apsms.modal.Role;
-import com.apsms.modal.User;
+import com.apsms.modal.user.User;
 import com.apsms.service.UserService;
 import com.apsms.utils.JwtTokenUtil;
-import com.apsms.utils.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,13 +29,13 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
     private UserDetailsService userDetailsService;
-
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/query")
@@ -58,23 +56,22 @@ public class UserController {
     public JsonResponse users(@RequestParam("username") String username,
                             @RequestParam("password") String password) throws Exception{
         User user = userService.findUserByName(username);
-        System.out.println(user);
-//
+
         if (user == null) {
             throw  new IllegalArgumentException("username or password is wrong");
         }
-        
+
         UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken( username, password);
 
         Authentication authentication = authenticationManager.authenticate(upToken);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-        System.out.println(userDetails);
-        jwtTokenUtil.generateToken(userDetails);
-        return new JsonResponse(true,  jwtTokenUtil.generateToken(userDetails));
+        String token = jwtTokenUtil.generateToken(userDetails);
+
+        return new JsonResponse(true,  token);
     }
 
     @GetMapping("/{name}")
@@ -123,5 +120,11 @@ public class UserController {
     @GetMapping(value = "/refreshToken")
     public String refreshToken(@RequestHeader String authorization) throws AuthenticationException {
         return userService.refreshToken(authorization);
+    }
+
+    @GetMapping("findOne")
+    public JsonResponse getUser() {
+        User user = userService.getCurrentUser();
+        return new JsonResponse(true, user);
     }
 }

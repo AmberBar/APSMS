@@ -1,16 +1,10 @@
-package com.apsms.modal;
+package com.apsms.modal.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -18,8 +12,7 @@ import java.util.List;
 @Table(name="user")
 public class User implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = 335175666014741380L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -36,11 +29,22 @@ public class User implements Serializable {
     private Date regDate;
     @Column(name="phone")
     private String phone;
-    @Column(name="address")
-    private String address;
+
     @OneToMany(cascade={CascadeType.ALL, CascadeType.REMOVE},fetch=FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private List<Role> roles;
+
+    @OneToMany(cascade={CascadeType.ALL, CascadeType.REMOVE})
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private List<Address> addresses;
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
 
     public List<Role> getRoles() {
         return roles;
@@ -48,18 +52,6 @@ public class User implements Serializable {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 
     public Integer getId() {
@@ -110,17 +102,4 @@ public class User implements Serializable {
         return password;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", regDate=" + regDate +
-                ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
-                ", roles=" + roles +
-                '}';
-    }
 }

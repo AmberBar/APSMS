@@ -3,10 +3,13 @@ package com.apsms.modal;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 @ConfigurationProperties(prefix = "audience")
 @Component
-public class Audience {
+public class Audience implements Serializable {
 
+    private static final long serialVersionUID = -2496003401714658299L;
     private String clientId;
     private String base64Secret;
     private String name;

@@ -126,7 +126,6 @@ class Users extends Component {
             </span>
             )
           })
-          
         ),
       },
 
