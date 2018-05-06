@@ -46,7 +46,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public Page<ShoppingCart> queryAll(String name, int pageNumber, int pageSize) {
+    public Page<ShoppingCart> queryAll(final String name, int pageNumber, int pageSize) {
 
 
         final User currentUser = userService.getCurrentUser();
@@ -59,12 +59,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             public Predicate toPredicate(Root<ShoppingCart> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 
                 Path<User> user = root.get("user");
-
-                Path<List<ShoppingList>> shoppingListPath = root.get("shoppingLists");
-
+                System.out.println(name);
                 Predicate p1 = cb.equal(user,  currentUser);
+                System.out.println("*************************");
+                System.out.println(root.join("shoppingLists").join("goods").get("name").as(String.class));
+                Predicate p2 = cb.like(root.join("shoppingLists").join("goods").get("brand").as(String.class), "%" + name + "%");
 
-                Predicate p = cb.and(p1);
+                Predicate p = cb.and(p2, p1);
 
                 return p;
             }

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import styles from './GoodsContainer.less'
 import { Link } from 'react-router-dom'
-import { List, Avatar, Icon, Button} from 'antd';
+import { List, Avatar, Icon, Button, Card} from 'antd';
+
+const { Meta } = Card
 
 class GoodsContainer extends Component {
 
@@ -50,10 +52,6 @@ class GoodsContainer extends Component {
 
       let {goodsList} = this.state
 
-      console.log("************")
-      console.log(goodsList)
-      console.log("************")
-
       let params = {
         onChange: this.handleTableChange
       }
@@ -62,7 +60,6 @@ class GoodsContainer extends Component {
       
       return (
             <div>
-
               <List
                  dataSource={this.state.goodsList}
                  grid={this.state.grid}
@@ -71,7 +68,7 @@ class GoodsContainer extends Component {
                    <Link to={"/apsms/detail?id=" + goods.id}>
                      <List.Item
                      >
-                       <div id="goods_detail_container">
+                       {/* <div id="goods_detail_container">
                          <div className={styles.img_container}>
                            <img src={goods.imgs[0].name}/>
                          </div>
@@ -88,7 +85,24 @@ class GoodsContainer extends Component {
                              {goods.name}
                            </label>
                          </div>
-                       </div>
+                       </div> */}
+                         <Card
+                          hoverable
+                          style={{ width: 300 , "margin-left": 30}}
+                          cover={
+                            <div classsName={styles.goods_imgs}>
+                              <img alt="goods_imgs" src={goods.imgs[0].name} />
+                            </div>
+                          }
+                          actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
+                        >
+                          <Meta
+                            style={{ height: 80}}
+                        
+                            title={goods.price}
+                            description={goods.name}
+                          />
+                        </Card>
                      </List.Item>
                    </Link>
                    )}

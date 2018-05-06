@@ -13,14 +13,6 @@ class ConfirmButton extends Component {
       }
     }
 
-    componentWillReceiveProps(nextProps) {
-        
- 
-    }
-
-
-
-
     render() {
 
         return (

@@ -38,6 +38,8 @@ public class Goods implements Serializable {
     private Date createDate;
     @Column(name="parts_type")
     private String type;
+    @Column(name="sales")
+    private int sales;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -105,6 +107,14 @@ public class Goods implements Serializable {
 
     public void setImgs(List<Img> imgs) {
         this.imgs = imgs;
+    }
+
+    public int getSales() {
+        return sales;
+    }
+
+    public void setSales(int sales) {
+        this.sales = sales;
     }
 
     @Override

@@ -38,14 +38,14 @@ public class ShoppingListController {
         return new JsonResponse(true, shoppingList);
     }
 
-    @GetMapping("/findAll")
-    public JsonResponse findAll(
-            @RequestParam("name") String name,
-            @RequestParam("pageNumber") int pageNumber,
-            @RequestParam("pageSize") int pageSize
-    ) {
-        return new JsonResponse(true, shoppingListService.queryAll(name, pageNumber, pageSize));
-    }
+//    @GetMapping("/findAll")
+//    public JsonResponse findAll(
+//            @RequestParam("name") String name,
+//            @RequestParam("pageNumber") int pageNumber,
+//            @RequestParam("pageSize") int pageSize
+//    ) {
+//        return new JsonResponse(true, shoppingListService.queryAll(name, pageNumber, pageSize));
+//    }
 
     @PutMapping("updateNumber")
     public  JsonResponse updateNumber(
@@ -69,4 +69,14 @@ public class ShoppingListController {
     ) {
        return new JsonResponse(true, shoppingListService.findAllByIds(ids));
     }
+
+    @GetMapping("/findAll")
+    public JsonResponse findAll(
+            @RequestParam("name") String name,
+            @RequestParam("pageNumber") int pageNumber,
+            @RequestParam("pageSize") int pageSize
+    ) {
+        return new JsonResponse(true, shoppingListService.findAll(name, pageNumber, pageSize));
+    }
+
 }

@@ -73,9 +73,9 @@ public class OrderServiceImpl implements OrderService {
 
                 Predicate p1 = cb.equal(user,  currentUser);
 
-//                Predicate p2 = cb.like(id,   name );
+                Predicate p2 = cb.like(root.join("shoppingLists").get("goods").get("name").as(String.class),   "%" + name + "%" );
 
-                Predicate p = cb.and(p1);
+                Predicate p = cb.and(p1, p2);
 
                 return p;
             }

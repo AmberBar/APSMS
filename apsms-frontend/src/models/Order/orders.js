@@ -81,15 +81,6 @@ export default {
             message.error(result.data.data)
           }
         },
-        *createGoods({ payload }, { put, call }) {
-          const result = yield call(createGoods  , payload);
-          if (result.data.success === true) {
-            console.log(result.data.data)
-            yield put(routerRedux.push('/goods'));
-          } else {
-            message.error(result.data.data)
-          }
-        },
         *delete({ payload }, { put, call }) {
           const result = yield call(deleteData, payload);
           if (result.data.success === true) {

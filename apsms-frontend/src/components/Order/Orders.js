@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {  Table, Button } from 'antd';
 import { Link } from 'react-router-dom'
 import * as moment from "moment"
+import styles from "./Orders.less"
 
 class AllGoods extends Component {
 
@@ -33,8 +34,18 @@ class AllGoods extends Component {
     render() {
       const shoppingListsColums = [
         {
+          title: 'goods imgs',
+          key: 'imgs',
+          width: "5%",
+          render: (text, record, index) => (
+            text.goods.imgs.length != 0? <img className={styles.img} src={text.goods.imgs[0].name} /> : "no img"       
+          ),
+        }
+        , 
+        {
           title: 'goods name',
           key: 'goods_name',
+          width: "10%",
           render: (text, record, index) => (
             text.goods.name
           )
@@ -44,12 +55,14 @@ class AllGoods extends Component {
           title: 'number',
           dataIndex: 'number',
           key: 'number',
+          width: "5%",
         }
         ,
         {
           title: 'total',
           dataIndex: 'sum',
           key: 'sum',
+          width: "5%",
         }
       ]
       let count = 0
@@ -57,6 +70,7 @@ class AllGoods extends Component {
         {
           title: 'order details',
           key: 'order details',
+          width: '50%',
           render: (text, record, index) => (
                 <Table 
                   dataSource={text.shoppingLists} 
@@ -70,11 +84,13 @@ class AllGoods extends Component {
           title: 'order id',
           dataIndex: 'id',
           key: 'id',
+          width: '9%',
         }
         ,
         {
           title: 'createDate',
           key: 'createDate',
+          width: '10%',
           render: (text, record, index) => (
             moment(text.createDate).format("YYYY-MM-DD")
           )
@@ -83,13 +99,24 @@ class AllGoods extends Component {
         {
           title: 'status',
           key: 'status',
-          dataIndex: "status"
+          dataIndex: "status",
+          width: '10%',
         }
         ,
         {
           title: 'total',
           key: 'total',
-          dataIndex: 'total'
+          dataIndex: 'total',
+          width: '10%',
+        }
+        ,
+        {
+          title: 'action',
+          key: 'action',
+          width: '30%',
+          render: (text, record, index) => (
+            <Action />
+          )
         }
       ];
       
@@ -105,3 +132,16 @@ class AllGoods extends Component {
 }   
 
 export default AllGoods;
+
+export class　Action extends Component{
+  
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div></div>
+    );
+  }
+}

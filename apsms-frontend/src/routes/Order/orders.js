@@ -33,7 +33,7 @@ export function Orders({history, dispatch, orders}) {
             }
             pagination = {...pagination, ...params}
             dispatch({
-                type: "goods/pullData",
+                type: "orders/pullData",
                 payload: 
                     pagination
             });

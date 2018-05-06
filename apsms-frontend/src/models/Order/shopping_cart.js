@@ -4,8 +4,7 @@ import { routerRedux } from 'dva/router';
 import { message, Select } from "antd";
 import { findAllOrders } from "../../services/order"
 import { format } from "url";
-import { queryAll } from "../../services/shoppingCart"
-import { updateNumber, deleteData } from "../../services/shoppingList"
+import { updateNumber, deleteData, queryAll} from "../../services/shoppingList"
 
 export default {
 
@@ -63,9 +62,9 @@ export default {
           let params = payload
           let pagination = yield select(state=>state.shopping_cart.pagination)
           const result = yield call(queryAll, params);
-            console.log(result.data.data)
           if (result.data.success === true) {
-            let shoppingList = result.data.data.content[0].shoppingLists
+            let shoppingList = result.data.data.content
+            console.log()
             let params = {
               pageNumber: result.data.data.number,
               total: result.data.data.totalElements,

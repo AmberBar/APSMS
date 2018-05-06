@@ -48,7 +48,7 @@ export function ShoppingCart({history, dispatch, shopping_cart}) {
             }
             pagination = {...pagination, ...params}
             dispatch({
-                type: "goods/pullData",
+                type: "shopping_cart/pullData",
                 payload: 
                     pagination
             });

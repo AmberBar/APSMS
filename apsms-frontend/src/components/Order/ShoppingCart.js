@@ -83,7 +83,6 @@ class ShoppingCart extends Component {
 
     render() {
         if ($.isEmptyObject(this.state.dataSource)) {
-            
             return <div></div>
         }
 
@@ -91,8 +90,8 @@ class ShoppingCart extends Component {
 
         const columns = [
             {
-                title: "checkbox ",
                 key: "checkbox",
+                width: "10%",
                 render: (text, record, index) => {
                     return (
                        <CheckboxRecord id={text.id} handleCheckBoxClick={this.handleCheckBox}/>
@@ -100,6 +99,15 @@ class ShoppingCart extends Component {
                 }
             }
             ,
+            {
+                title: 'goods imgs',
+                key: 'imgs',
+                width: "10%",
+                render: (text, record, index) => (
+                  text.goods.imgs.length != 0? <img className={styles.img} src={text.goods.imgs[0].name} /> : "no img"       
+                ),
+            }
+            , 
             {
                 title: "goods name",
                 key: "goods name",
@@ -113,6 +121,7 @@ class ShoppingCart extends Component {
             {
                 title: "goods number",
                 key: "goods number",
+                width: "10%",
                 render: (text, record, index) => {
                     return (
                         <GoodsNumber id={text.id} goodsNumber={text.number} changeNumber={this.changeGoodsNumber}/>
@@ -123,12 +132,14 @@ class ShoppingCart extends Component {
             {
                 title: "sum",
                 key: "sum",
-                dataIndex: "sum"
+                dataIndex: "sum",
+                width: "10%",
             }
             ,
             {
                 title: 'Action',
                 key: 'action',
+                width: "20%",
                 render: (text, record, index) => (
                   <span>
                       <Button type="primary" onClick={() => this.handleDelete(text.id)}>Delete</Button>

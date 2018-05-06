@@ -83,6 +83,15 @@ class OrderConfirm extends Component {
                 dataIndex: 'id',
                 key: 'goods_name',
             },
+            ,
+            {
+                title: 'goods imgs',
+                key: 'imgs',
+                render: (text, record, index) => (
+                  text.goods.imgs.length != 0? <img className={styles.img} src={text.goods.imgs[0].name} /> : "no img"       
+                ),
+            }
+            , 
             {
                 title: 'price',
                 key: 'price',

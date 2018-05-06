@@ -50,7 +50,6 @@ public class ShoppingListServiceImpl implements ShoppingListService {
         System.out.println(shoppingList);
         ShoppingList oldShoppingList = shoppingListRepository.findByShoppingListByUserAndGoods(user.getId(), shoppingList.getGoods().getId());
 
-        System.out.println("/////////////////");
         if (oldShoppingList == null) {
             shoppingListRepository.save(shoppingList);
         } else {
@@ -59,11 +58,10 @@ public class ShoppingListServiceImpl implements ShoppingListService {
             shoppingListRepository.save(oldShoppingList);
         }
 
-        System.out.println("/////////////////");
         List<ShoppingList> shoppingLists = shoppingListRepository.findAllByUser(user.getId());
         shoppingCart.setShoppingLists(shoppingLists);
         shoppingCartRepository.save(shoppingCart);
-        System.out.println("/////////////////");
+
         return shoppingList;
     }
 
@@ -79,40 +77,6 @@ public class ShoppingListServiceImpl implements ShoppingListService {
     public ShoppingList getById(Integer id) {
         ShoppingList shoppingList = shoppingListRepository.findOne(id);
         return shoppingList;
-    }
-
-
-    @Override
-    public Page<ShoppingList> queryAll(String name, int pageNumber, int pageSize) {
-
-
-        final User currentUser = userService.getCurrentUser();
-
-        Pageable pageable=new PageRequest(pageNumber, pageSize);
-
-        Specification<ShoppingList> spec = new Specification<ShoppingList>() {
-
-            @Override
-            public Predicate toPredicate(Root<ShoppingList> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-
-                Path<User> user = root.get("user");
-
-                Path<Integer> order = root.get("order");
-
-                Predicate p1 = cb.equal(user,  currentUser);
-                System.out.println("*********************");
-                System.out.println(order);
-
-                Predicate p2 = cb.isNull(order.get("id"));
-
-//                Predicate p2 = cb.like(id,   name );
-
-                Predicate p = cb.and(p1, p2);
-
-                return p;
-            }
-        };
-        return shoppingListRepository.findAll(spec, pageable);
     }
 
     @Override
@@ -137,5 +101,14 @@ public class ShoppingListServiceImpl implements ShoppingListService {
             shoppingLists.add(shoppingList);
         }
         return shoppingLists;
+    }
+
+    @Override
+    public Page<ShoppingList> findAll(String name, int pageNumber, int pageSize) {
+        User user = userService.getCurrentUser();
+        Pageable pageable = new PageRequest(pageNumber,pageSize);
+        Page<ShoppingList> page = shoppingListRepository.findShoppingListByUserPageable(name, user.getId(),pageable);
+
+        return page;
     }
 }
