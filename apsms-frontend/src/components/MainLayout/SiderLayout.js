@@ -35,7 +35,7 @@ class SiderLayout extends Component {
                 </Link>  
             </Menu.Item>
             <Menu.Item key="shopping_cart">
-                <Link to="shoppingCart">
+                <Link to="/shoppingCart">
                     <Icon type="shopping_cart" />shoppingCart
                 </Link>
             </Menu.Item>
@@ -48,15 +48,12 @@ class SiderLayout extends Component {
                     <Icon type="personal_information" />Personal information
                 </Link>
             </Menu.Item>
-            <SubMenu key="order" title={<span><Icon type="user" />My order</span>}>
-                <Menu.Item key="all_Order">
-                    <Link to="/orders">
-                        All Order
-                    </Link>
-                </Menu.Item>
-                <Menu.Item key="1">finished order</Menu.Item>
-                <Menu.Item key="2">unfinished order</Menu.Item>
-            </SubMenu>
+            <Menu.Item key="my_order">
+                <Link to="/orders">
+                    <Icon type="user" />
+                    All Order
+                </Link>
+            </Menu.Item>
             <SubMenu key="admin" title={<span><Icon type="user" />I am admin</span>}>
                 <SubMenu key="goods" title={<span><Icon type="goods" />CURD Goods</span>}>
                     <Menu.Item key="all_goods">
@@ -69,8 +66,6 @@ class SiderLayout extends Component {
                             Create Goods
                         </Link>                            
                     </Menu.Item>
-                    <Menu.Item key="edit_goods">Edit Goods</Menu.Item>
-                    <Menu.Item key="delete_goods">Delete Goods</Menu.Item>
                 </SubMenu>
                 <Menu.Item key="users">
                     <Link to="/users">CURD Users</Link>

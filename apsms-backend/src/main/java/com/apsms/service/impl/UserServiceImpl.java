@@ -36,8 +36,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-
-
     @Override
     public Page<User> queryAll(final User param, int pageNumber,int pageSize) {
         Pageable pageable=new PageRequest(pageNumber, pageSize);  //分页信息

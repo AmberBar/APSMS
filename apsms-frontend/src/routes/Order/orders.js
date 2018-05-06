@@ -15,30 +15,14 @@ export function Orders({history, dispatch, orders}) {
     const orderProps = {
         ordersList,
         pagination,
-        // changTablePagination(pagination) {
-        //     pagination.pageNumber = pagination.current - 1
-        //     dispatch({
-        //         type: "goods/pullData",
-        //         payload: 
-        //             pagination
-        //     });
-        // },
-        // delete(index) {
-        //     let params = goodsList[index]
-        //     dispatch({
-        //         type: "goods/delete",
-        //         payload: 
-        //             params
-        //     });
-        // },
-        // edit(index) {
-        //     let params = goodsList[index]
-        //     dispatch({
-        //         type: "goods/edit",
-        //         payload: 
-        //             params.id
-        //     }); 
-        // }
+        changTablePagination(pagination) {
+            pagination.pageNumber = pagination.current - 1
+            dispatch({
+                type: "orders/pullData",
+                payload: 
+                    pagination
+            });
+        },
     }
     
 

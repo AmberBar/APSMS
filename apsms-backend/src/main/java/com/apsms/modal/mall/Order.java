@@ -35,7 +35,7 @@ public class Order implements Serializable {
     private Date createDate;
 
     @OneToMany(cascade={CascadeType.MERGE} )
-    @JoinColumn(name = "shoppingList_id", referencedColumnName = "id")
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
     private List<ShoppingList> shoppingLists;
 
     @OneToOne(cascade = CascadeType.MERGE)

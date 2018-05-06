@@ -1,6 +1,7 @@
 package com.apsms.service.impl;
 
 import com.apsms.modal.mall.Order;
+import com.apsms.modal.mall.ShoppingList;
 import com.apsms.modal.user.User;
 import com.apsms.modal.mall.ShoppingCart;
 import com.apsms.repository.ShoppingCartRepository;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.*;
+import java.util.List;
 
 @Transactional
 @Service
@@ -43,4 +45,30 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return shoppingCartRepository.save(shoppingCart);
     }
 
+    @Override
+    public Page<ShoppingCart> queryAll(String name, int pageNumber, int pageSize) {
+
+
+        final User currentUser = userService.getCurrentUser();
+
+        Pageable pageable=new PageRequest(pageNumber, pageSize);
+
+        Specification<ShoppingCart> spec = new Specification<ShoppingCart>() {
+
+            @Override
+            public Predicate toPredicate(Root<ShoppingCart> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+
+                Path<User> user = root.get("user");
+
+                Path<List<ShoppingList>> shoppingListPath = root.get("shoppingLists");
+
+                Predicate p1 = cb.equal(user,  currentUser);
+
+                Predicate p = cb.and(p1);
+
+                return p;
+            }
+        };
+        return shoppingCartRepository.findAll(spec, pageable);
+    }
 }

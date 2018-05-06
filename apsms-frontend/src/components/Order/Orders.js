@@ -31,7 +31,6 @@ class AllGoods extends Component {
     }
 
     render() {
-
       const shoppingListsColums = [
         {
           title: 'goods name',

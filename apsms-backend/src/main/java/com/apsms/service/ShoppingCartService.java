@@ -1,6 +1,7 @@
 package com.apsms.service;
 
 import com.apsms.modal.mall.Order;
+import com.apsms.modal.mall.ShoppingList;
 import com.apsms.modal.user.User;
 import com.apsms.modal.mall.ShoppingCart;
 import org.springframework.data.domain.Page;
@@ -14,4 +15,6 @@ public interface ShoppingCartService {
     ShoppingCart createShoppingCart(User user);
 
     ShoppingCart updateShoppingCart(ShoppingCart shoppingCart);
+
+    Page<ShoppingCart> queryAll(final String name, int pageNumber, int pageSize);
 }

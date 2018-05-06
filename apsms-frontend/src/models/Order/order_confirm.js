@@ -1,9 +1,9 @@
 import { findAllAddress} from "../../services/address"
-import { getShoppingList } from "../../services/shoppingList"
+import { getShoppingList, findAllByIds } from "../../services/shoppingList"
 import { createOrder } from "../../services/order"
 import { getQueryString } from "../../utils/common.js"
 import { routerRedux } from 'dva/router';
-import { message, Select } from "antd";
+import { message, Select} from "antd";
 
 export default {
 
@@ -20,16 +20,30 @@ export default {
         history.listen(location => {
           if (location.pathname === "/order/confirm") {
             let id = getQueryString("id", location)
-            dispatch({
-              type: 'findOne',
-              payload: {
-                id: id
-              }
-            });
-            dispatch({
-              type: 'init',
-              payload: {}
-            });
+            let checkList = getQueryString("checkList", location)
+            if (id) {
+              dispatch({
+                type: 'findOne',
+                payload: {
+                  id: id
+                }
+              });
+              dispatch({
+                type: 'init',
+                payload: {}
+              });
+            }
+
+            if (checkList) {
+              dispatch({
+                type: 'init',
+                payload: {}
+              });
+              dispatch({
+                type: 'findShoppingList',
+                payload: checkList
+              })
+            }
           }
         });
       },
@@ -49,6 +63,25 @@ export default {
             type: "save",
             payload: {
               addresses: result.data.data
+            }
+          })
+        } else {
+          message.error(result.data.data)
+        }
+      },
+      *findShoppingList({ payload }, { put, call }) {
+        let params = payload.split(",").map((num) => {
+          let id = parseInt(num)
+          return id
+        }) 
+      
+        let result = yield call(findAllByIds, params)
+        if (result.data.success === true) {
+          let shoppingList = result.data.data
+          yield put({
+            type: "save",
+            payload: {
+              shoppingList: shoppingList
             }
           })
         } else {

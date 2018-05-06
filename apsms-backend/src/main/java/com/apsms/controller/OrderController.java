@@ -23,7 +23,6 @@ public class OrderController {
     public JsonResponse create(
             @RequestBody Order order
     ) {
-        System.out.println(order);
         return new JsonResponse(true, orderService.createOrder(order));
     }
 

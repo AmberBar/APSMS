@@ -1,11 +1,13 @@
 package com.apsms.controller;
 
+import com.apsms.modal.Ids;
 import com.apsms.modal.JsonResponse;
 import com.apsms.modal.mall.ShoppingList;
 import com.apsms.service.ShoppingListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Array;
 import java.util.List;
 
 @RestController
@@ -20,7 +22,6 @@ public class ShoppingListController {
             @RequestBody ShoppingList shoppingList
     ) {
         shoppingListService.updateShoppingList(shoppingList);
-        System.out.println(shoppingList);
         return new JsonResponse(true, "add success!");
     }
 
@@ -43,6 +44,29 @@ public class ShoppingListController {
             @RequestParam("pageNumber") int pageNumber,
             @RequestParam("pageSize") int pageSize
     ) {
-        return new JsonResponse(true, shoppingListService.queryAll(name, pageNumber, pageNumber));
+        return new JsonResponse(true, shoppingListService.queryAll(name, pageNumber, pageSize));
+    }
+
+    @PutMapping("updateNumber")
+    public  JsonResponse updateNumber(
+        @RequestParam Integer id,
+        @RequestParam int number
+    ) {
+        return new JsonResponse(true, shoppingListService.updateNumber(id, number));
+    }
+
+    @DeleteMapping("/delete")
+    public  JsonResponse delete(
+            @RequestParam Integer id
+    ) {
+        shoppingListService.delete(id);
+        return new JsonResponse(true, "delete shopping detail success!");
+    }
+
+    @PostMapping("/findAllByIds")
+    public  JsonResponse findAllByIds(
+            @RequestBody List<Integer> ids
+    ) {
+       return new JsonResponse(true, shoppingListService.findAllByIds(ids));
     }
 }

@@ -16,3 +16,11 @@ export async function buyNow(params) {
     method: "post"
   })
 }
+
+export async function queryAll(params) {
+  return request({
+    url: `/shoppingCart/findAll`,
+    params: params,
+    method: "get"
+  })
+}

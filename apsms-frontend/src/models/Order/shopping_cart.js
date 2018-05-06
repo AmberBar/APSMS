@@ -1,10 +1,11 @@
-import { createGoods, findAllGoods, deleteData, getGoods, editParams} from "../../services/goods.js"
+import { createGoods, findAllGoods, getGoods, editParams} from "../../services/goods.js"
 import { getQueryString } from "../../utils/common.js"
 import { routerRedux } from 'dva/router';
 import { message, Select } from "antd";
 import { findAllOrders } from "../../services/order"
 import { format } from "url";
 import { queryAll } from "../../services/shoppingCart"
+import { updateNumber, deleteData } from "../../services/shoppingList"
 
 export default {
 
@@ -19,7 +20,7 @@ export default {
     subscriptions: {
       setup({ dispatch, history}) {  
         history.listen(location => {
-          if (location.pathname === "/shoppingcart") {
+          if (location.pathname === "/shoppingCart") {
             dispatch({
               type: 'init',
               payload: {
@@ -62,9 +63,9 @@ export default {
           let params = payload
           let pagination = yield select(state=>state.shopping_cart.pagination)
           const result = yield call(queryAll, params);
-          if (result.data.success === true) {
-            let shoppingList = result.data.data.content
             console.log(result.data.data)
+          if (result.data.success === true) {
+            let shoppingList = result.data.data.content[0].shoppingLists
             let params = {
               pageNumber: result.data.data.number,
               total: result.data.data.totalElements,
@@ -82,45 +83,43 @@ export default {
             message.error(result.data.data)
           }
         },
-        *createGoods({ payload }, { put, call }) {
-          const result = yield call(createGoods  , payload);
-          if (result.data.success === true) {
-            console.log(result.data.data)
-            yield put(routerRedux.push('/goods'));
-          } else {
-            message.error(result.data.data)
-          }
+        *createOrder({ payload }, { put, call }) {
+          yield put(routerRedux.push('/order/confirm?checkList=' + payload));
         },
         *delete({ payload }, { put, call }) {
           const result = yield call(deleteData, payload);
           if (result.data.success === true) {
             message.success(result.data.data)
-            yield put(routerRedux.push('/goods'));
+            yield put({
+              type: 'init',
+              payload: {
+                pagination: {
+                  name: "",
+                  pageNumber: 0,
+                  pageSize: 10,
+                }
+              }
+            });
           } else {
             message.error(result.data.data)
           }
         },
-        *findOne({ payload }, { put, call }) {
-          let result = yield call(getGoods, payload)
+        *updateNumber({ payload }, { put, call }) {
+          let result = yield call(updateNumber, payload)
           if (result.data.success === true) {
             yield put({
-              type: "save",
+              type: 'init',
               payload: {
-                goodsDetail: result.data.data
+                pagination: {
+                  name: "",
+                  pageNumber: 0,
+                  pageSize: 10,
+                }
               }
-            })
+            });
           } else {
-            message.error(result.data.data)
-          }
-        },
-        *edit({ payload }, { put, call }) {
-          let result = yield call(editParams, payload)
-          if (result.data.success === true) {
-            message.success(result.data.data)
-            yield put(routerRedux.push('/goods'));
-          } else {
-            message.error(result.data.data)
-          }
+            message.error("update number failed!")
+          } 
         }
     },
   

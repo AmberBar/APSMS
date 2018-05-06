@@ -4,42 +4,42 @@ import SearchContainer from '../../components/Mall/SearchContainer';
 import MainLayout from '../../components/MainLayout/MainLayout';
 import styles from "./orders.less"
 import Cart from "../../components/Order/ShoppingCart"
+import ConfirmButton from "../../components/Order/ConfirmButton"
 
 export function ShoppingCart({history, dispatch, shopping_cart}) {
     let { 
-        ordersList, 
+        shoppingList, 
         pagination
     } = shopping_cart
 
     const cartProps = {
-        ordersList,
+        shoppingList,
         pagination,
-        // changTablePagination(pagination) {
-        //     pagination.pageNumber = pagination.current - 1
-        //     dispatch({
-        //         type: "goods/pullData",
-        //         payload: 
-        //             pagination
-        //     });
-        // },
-        // delete(index) {
-        //     let params = goodsList[index]
-        //     dispatch({
-        //         type: "goods/delete",
-        //         payload: 
-        //             params
-        //     });
-        // },
-        // edit(index) {
-        //     let params = goodsList[index]
-        //     dispatch({
-        //         type: "goods/edit",
-        //         payload: 
-        //             params.id
-        //     }); 
-        // }
+        changeGoodsNumber(id, values) {
+            dispatch({
+                type: "shopping_cart/updateNumber",
+                payload: {
+                    id: id,
+                    number: values
+                }
+            })
+        },
+        submit(values) {
+            dispatch({
+                type: "shopping_cart/createOrder",
+                payload: 
+                    values
+            });
+        },
+        delete(id) {
+            dispatch({
+                type: "shopping_cart/delete",
+                payload: {
+                    id: id
+                }
+            });
+        },
     }
-    
 
     const searchProps = {
         search(values) {

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -48,7 +49,8 @@ public class ShoppingListServiceImpl implements ShoppingListService {
 
         System.out.println(shoppingList);
         ShoppingList oldShoppingList = shoppingListRepository.findByShoppingListByUserAndGoods(user.getId(), shoppingList.getGoods().getId());
-        ;
+
+        System.out.println("/////////////////");
         if (oldShoppingList == null) {
             shoppingListRepository.save(shoppingList);
         } else {
@@ -57,9 +59,11 @@ public class ShoppingListServiceImpl implements ShoppingListService {
             shoppingListRepository.save(oldShoppingList);
         }
 
-        List<ShoppingList> shoppingLists = shoppingListRepository.findAllByUser(user);
+        System.out.println("/////////////////");
+        List<ShoppingList> shoppingLists = shoppingListRepository.findAllByUser(user.getId());
         shoppingCart.setShoppingLists(shoppingLists);
         shoppingCartRepository.save(shoppingCart);
+        System.out.println("/////////////////");
         return shoppingList;
     }
 
@@ -93,11 +97,13 @@ public class ShoppingListServiceImpl implements ShoppingListService {
 
                 Path<User> user = root.get("user");
 
-                Path<Integer> order_id = root.get("order_id");
+                Path<Integer> order = root.get("order");
 
                 Predicate p1 = cb.equal(user,  currentUser);
+                System.out.println("*********************");
+                System.out.println(order);
 
-                Predicate p2 = cb.isNull(order_id);
+                Predicate p2 = cb.isNull(order.get("id"));
 
 //                Predicate p2 = cb.like(id,   name );
 
@@ -107,5 +113,29 @@ public class ShoppingListServiceImpl implements ShoppingListService {
             }
         };
         return shoppingListRepository.findAll(spec, pageable);
+    }
+
+    @Override
+    public ShoppingList updateNumber(Integer id, int number) {
+
+        ShoppingList shoppingList = shoppingListRepository.findOne(id);
+        shoppingList.setNumber(number);
+
+        return shoppingListRepository.save(shoppingList);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        shoppingListRepository.delete(id);
+    }
+
+    @Override
+    public List<ShoppingList> findAllByIds(List<Integer> ids) {
+        List<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
+        for (Integer id : ids) {
+            ShoppingList shoppingList = shoppingListRepository.findOne(id);
+            shoppingLists.add(shoppingList);
+        }
+        return shoppingLists;
     }
 }

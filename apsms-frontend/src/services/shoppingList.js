@@ -15,3 +15,27 @@ export async function queryAll(params) {
     method: "get"
   })
 }
+
+export async function updateNumber(params) {
+  return request({
+    url: `/shoppingList/updateNumber`,
+    params: params,
+    method: "put"
+  })
+}
+
+export async function deleteData(params) {
+  return request({
+    url: `/shoppingList/delete`,
+    params: params,
+    method: "delete"
+  })
+}
+
+export async function findAllByIds(params) {
+  return request({
+    url: `/shoppingList/findAllByIds`,
+    data: params,
+    method: "post"
+  })
+}

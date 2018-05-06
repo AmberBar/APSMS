@@ -20,8 +20,8 @@ public class ShoppingCart implements Serializable {
     @JoinColumn(name="user_id",referencedColumnName="id")
     private User user;
 
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER)
-    @JoinColumn(name = "shoppingCart_id", referencedColumnName = "id")
+    @OneToMany(cascade={CascadeType.ALL, CascadeType.REMOVE},fetch=FetchType.EAGER)
+    @JoinColumn(name = "shopping_cart_id", referencedColumnName = "id")
     private List<ShoppingList> shoppingLists;
 
     public Integer getId() {

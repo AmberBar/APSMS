@@ -6,6 +6,8 @@ import com.apsms.modal.mall.ShoppingList;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface ShoppingListService {
 
@@ -16,4 +18,10 @@ public interface ShoppingListService {
     ShoppingList getById(Integer id);
 
     Page<ShoppingList> queryAll(final String name, int pageNumber, int pageSize);
+
+    ShoppingList updateNumber(Integer id, int number);
+
+    void delete(Integer id);
+
+    List<ShoppingList> findAllByIds(List<Integer> ids);
 }
