@@ -71,7 +71,7 @@ class GoodsDetail extends Component {
                 { goodsDetail.name}
               </h1>
               <div className={styles.number}>
-                Number: <InputNumber min={1} max={10} defaultValue={1} onChange={this.onChange} />
+                Number: <InputNumber min={1} max={goodsDetail.stock} defaultValue={1} onChange={this.onChange} />
               </div>
               <div className={styles.confirm}>
                 <Button type="primary" size="large" className={styles.confirm_button1} onClick={this.handleBuyNow}>

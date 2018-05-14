@@ -147,7 +147,7 @@ class CreateNewGoods extends React.Component {
           )}
         >
           {getFieldDecorator('name', {
-            rules: [{ required: false, message: 'Please input your nickname!'}],
+            rules: [{ required: true, message: 'Please input goods　name!'}],
           })(
             <Input />
           )}
@@ -161,7 +161,7 @@ class CreateNewGoods extends React.Component {
             )}
           >
             {getFieldDecorator('price', {
-              rules: [{ required: false, message: 'Please input goods price!' }],
+              rules: [{ required: true, message: 'Please input goods price!' }],
             })(
               <Input />
             )}
@@ -176,12 +176,26 @@ class CreateNewGoods extends React.Component {
             )}
           >
             {getFieldDecorator('brand', {
-              rules: [{ required: false, message: 'Please input goods brand!' }],
+              rules: [{ required: true, message: 'Please input goods brand!' }],
             })(
              <Input />
             )}
           </FormItem>
-         
+
+            <FormItem
+            {...formItemLayout}
+            label={(
+              <span>
+                stock&nbsp;
+              </span>
+            )}
+          >
+            {getFieldDecorator('stock', {
+              rules: [{ required: true, message: 'Please input goods stock!' }],
+            })(
+             <Input />
+            )}
+          </FormItem>
           <FormItem
             {...formItemLayout}
             label={(
@@ -205,7 +219,7 @@ class CreateNewGoods extends React.Component {
             )}
           >
             {getFieldDecorator('type', {
-              rules: [{ required: false, message: 'Please input your nickname!' }],
+              rules: [{ required: false, message: 'Please input goods type!' }],
             })(
               <Input />
             )}

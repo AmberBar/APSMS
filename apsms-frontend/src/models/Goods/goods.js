@@ -1,4 +1,4 @@
-import { createGoods, findAllGoods, deleteData, getGoods, editParams} from "../../services/goods.js"
+import { createGoods, findAllGoods, deleteData, getGoods, editParams, changeStock} from "../../services/goods.js"
 import { getQueryString } from "../../utils/common.js"
 import { routerRedux } from 'dva/router';
 import { message, Select } from "antd";
@@ -114,6 +114,14 @@ export default {
           let result = yield call(editParams, payload)
           if (result.data.success === true) {
             message.success(result.data.data)
+            yield put(routerRedux.push('/goods'));
+          } else {
+            message.error(result.data.data)
+          }
+        },
+        *changeStock({ payload }, { put, call }) {
+          let result = yield call(changeStock, payload)
+          if (result.data.success === true) {
             yield put(routerRedux.push('/goods'));
           } else {
             message.error(result.data.data)

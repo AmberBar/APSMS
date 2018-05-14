@@ -41,6 +41,7 @@ export function Apsms({history, dispatch, apsms}) {
                 <SearchContainer { ...searchProps}/>
             </div>
             <div className={styles.goods_container}>
+            <a href="tencent://message/?uin=949144210"><img border="0" src="http://img.bimg.126.net/photo/sE76_-8lNVUr1d6N-SZ_dQ==/2565644412717916539.jpg" alt="点击这里给我发消息"/></a>
                 <GoodsContainer {...apsmaProps}/>
             </div>
         </MainLayout>

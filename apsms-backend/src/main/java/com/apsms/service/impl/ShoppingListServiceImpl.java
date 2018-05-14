@@ -1,9 +1,11 @@
 package com.apsms.service.impl;
 
+import com.apsms.modal.mall.Goods;
 import com.apsms.modal.mall.Order;
 import com.apsms.modal.user.User;
 import com.apsms.modal.mall.ShoppingCart;
 import com.apsms.modal.mall.ShoppingList;
+import com.apsms.repository.GoodsRepository;
 import com.apsms.repository.ShoppingCartRepository;
 import com.apsms.repository.ShoppingListRepository;
 import com.apsms.service.ShoppingCartService;
@@ -37,6 +39,9 @@ public class ShoppingListServiceImpl implements ShoppingListService {
     @Autowired
     ShoppingCartService shoppingCartService;
 
+    @Autowired
+    GoodsRepository goodsRepository;
+
     @Override
     public ShoppingList updateShoppingList(ShoppingList shoppingList) {
         User user = userService.getCurrentUser();
@@ -68,7 +73,9 @@ public class ShoppingListServiceImpl implements ShoppingListService {
     public ShoppingList createShoppingList(ShoppingList shoppingList) {
         User user = userService.getCurrentUser();
         shoppingList.setUser(user);
-
+        Goods goods = goodsRepository.findOne(shoppingList.getGoods().getId());
+        int num = goods.getStock() - shoppingList.getNumber();
+        goods.setStock(num);
         return shoppingListRepository.save(shoppingList);
     }
 

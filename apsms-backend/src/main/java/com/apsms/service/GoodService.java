@@ -14,4 +14,6 @@ public interface GoodService {
     void delete(Goods goods);
 
     Goods getGoodsById(Integer id);
+
+    Goods changeStock(Integer id, int num);
 }

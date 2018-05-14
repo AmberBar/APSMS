@@ -54,4 +54,11 @@ public class GoodServiceImpl implements GoodService {
     public Goods getGoodsById(Integer id) {
         return goodsRepository.findOne(id);
     }
+
+    @Override
+    public Goods changeStock(Integer id, int num) {
+        Goods goods = goodsRepository.findOne(id);
+        goods.setStock(num);
+        return goodsRepository.save(goods);
+    }
 }

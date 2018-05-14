@@ -186,7 +186,7 @@ class EditOldGoods extends React.Component {
           )}
         >
           {getFieldDecorator('name', {
-            rules: [{ required: false, message: 'Please input your nickname!'}],
+            rules: [{ required: true, message: 'Please input your nickname!'}],
             initialValue: goodsDetail.name
           })(
             <Input />
@@ -201,13 +201,27 @@ class EditOldGoods extends React.Component {
             )}
           >
             {getFieldDecorator('price', {
-              rules: [{ required: false, message: 'Please input goods price!' }],
+              rules: [{ required: true, message: 'Please input goods price!' }],
               initialValue: goodsDetail.price
             })(
               <Input />
             )}
           </FormItem>
-
+          <FormItem
+            {...formItemLayout}
+            label={(
+              <span>
+                stock&nbsp;
+              </span>
+            )}
+          >
+            {getFieldDecorator('stock', {
+              rules: [{ required: true, message: 'Please input goods stock!' }],
+              initialValue: goodsDetail.stock
+            })(
+             <Input />
+            )}
+          </FormItem>
            <FormItem
             {...formItemLayout}
             label={(

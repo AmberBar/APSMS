@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import {  Table, Button } from 'antd';
+import {  Table, Button, InputNumber } from 'antd';
 import styles from './AllGoods.less'
 import { Link } from 'react-router-dom'
 import * as moment from "moment"
+import index from 'dva/lib';
 
 class AllGoods extends Component {
 
@@ -31,6 +32,10 @@ class AllGoods extends Component {
       });
     }
 
+    onChange = (id, values) => {
+      this.props.changeStock(id, values);
+    }
+
     handleDelete(index) {
       this.props.delete(index)
     }
@@ -53,8 +58,25 @@ class AllGoods extends Component {
         title: 'name',
         dataIndex: 'name',
         key: 'name',
-        width: "30%"
+        width: "15%"
       }, 
+      {
+        title: 'sales',
+        dataIndex: 'sales',
+        key: 'sales',
+        width: "10%",
+      },
+      {
+        title: 'stock',
+        // dataIndex: 'stock',
+        key: 'stock',
+        width: "10%",
+        render: (text) => {
+          return(
+            <ChangeStock text={text} index={index} onChange={this.onChange}/>
+          )
+        }
+      },
       {
         title: 'price',
         dataIndex: 'price',
@@ -89,6 +111,7 @@ class AllGoods extends Component {
       {
         title: 'Action',
         key: 'action',
+        width: '20%',
         render: (text, record, index) => (      
           <span>
             <Link to={"goods/edit?id=" + this.state.dataSource[index].id}>
@@ -112,3 +135,22 @@ class AllGoods extends Component {
 }   
 
 export default AllGoods;
+
+
+export class ChangeStock extends Component {
+  constructor(props) {
+    super(props)
+  }
+
+  onChange = (values) => {
+    this.props.onChange(this.props.text.id, values)
+  }
+
+  render() {
+
+    let {text, index} = this.props
+    return(
+      <InputNumber min={1} max={9999} defaultValue={text.stock} onChange={this.onChange}/>
+    )
+  }
+}

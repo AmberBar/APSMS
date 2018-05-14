@@ -97,4 +97,14 @@ public class GoodsController {
         }
         else return new JsonResponse(false, "上传失败，因为文件是空的.");
     }
+
+    @PutMapping("/stock")
+    public JsonResponse changeStock(
+            @RequestParam int stock,
+            @RequestParam Integer id
+    ) {
+
+        Goods goods = goodService.changeStock(id, stock);
+        return new JsonResponse(true, goods);
+    }
 }

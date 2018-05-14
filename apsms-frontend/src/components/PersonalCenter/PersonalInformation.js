@@ -107,7 +107,7 @@ class PersonalInformation extends Component {
                     return (
                         <div>
                             <Button type="primary" >
-                                <EditAddress { ...text}/> 
+                               Edit
                             </Button>
                             <Button type="primary">Delete</Button>
                         </div>
@@ -277,7 +277,7 @@ export class CreateAddress extends Component {
         super(props)
 
         this.state = {
-            visible: true
+            visible: false
         }
     }
 
@@ -301,60 +301,6 @@ export class CreateAddress extends Component {
                     >
                     
                 </Modal>
-            </div>
-        );
-    }
-}
-
-let alert = Modal.alert
-export class EditAddress extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            visible: true
-        }
-    }
-
-    
-    render() {
-
-        const formItemLayout = {
-            labelCol: {
-              xs: { span: 24 },
-              sm: { span: 8 },
-            },
-            wrapperCol: {
-              xs: { span: 24 },
-              sm: { span: 16 },
-            },
-          };
-          const tailFormItemLayout = {
-            wrapperCol: {
-              xs: {
-                span: 24,
-                offset: 0,
-              },
-              sm: {
-                span: 16,
-                offset: 8,
-              },
-            },
-          };
-
-        let { text } = this.props;
-        console.log(text)
-        return (
-            <div>
-                Edit
-                {/* <Modal
-                    title="Basic Modal"
-                    visible={this.state.visible}
-                    // onOk={this.handleOk}
-                    // onCancel={this.handleCancel}
-                    >
-
-                </Modal> */}
             </div>
         );
     }

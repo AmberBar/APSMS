@@ -59,14 +59,6 @@ export default {
           let result = yield call(buyNow, payload)
           if (result.data.success === true) {
             let shoppingList = result.data.data
-            // let params = []
-            // params.push(shoppingList)
-            // yield put({
-            //   type: "save",
-            //   payload: {
-            //     shoppingList: params
-            //   }
-            // })
             yield put(routerRedux.push("/order/confirm?id=" + shoppingList.id))
           } else {
             message.error(result.data.data)

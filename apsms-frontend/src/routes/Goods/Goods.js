@@ -35,6 +35,15 @@ export function Goods({history, dispatch, goods}) {
                 payload: 
                     params.id
             }); 
+        },
+        changeStock(id, values) {
+            dispatch({
+                type: "goods/changeStock",
+                payload: {
+                    stock: values,
+                    id: id
+                }
+            });
         }
     }
     

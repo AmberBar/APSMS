@@ -40,3 +40,11 @@ export async function editParams(params) {
     method: "put"
   })
 }
+
+export async function changeStock(params) {
+  return request({
+    url: `/goods/stock`,
+    params: params,
+    method: "put"
+  })
+}

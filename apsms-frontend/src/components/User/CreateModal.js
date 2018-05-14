@@ -61,9 +61,6 @@ class CreateModal extends Component {
 
 
     setModal2Visible() {
-        // this.setState({
-        //     editVisible: !this.state.editVisible
-        // });
         this.props.changeCreateModal(!this.state.editVisible)
     }  
 
@@ -163,7 +160,7 @@ class CreateModal extends Component {
                                 type: "array"
                             },
                         {
-                        required: true, message: 'Please input your role!',
+                        required: false, message: 'Please input your role!',
                         }],
                     })(
                         
@@ -172,9 +169,9 @@ class CreateModal extends Component {
                             onSelect={this.onSelect}
                             onCheck={this.onCheck}
                       >
-                            <TreeNode title="user" key="USER"  />
-                            <TreeNode title="admin" key="ADMIN" />
-                            <TreeNode title="customer_service" key="CS  " />
+                            <TreeNode title="user" key="ROLE_USER"  />
+                            <TreeNode title="admin" key="ROLE_ADMIN" />
+                            <TreeNode title="customer_service" key="ROLE_CS  " />
                       </Tree>
                      )} 
                 </FormItem>

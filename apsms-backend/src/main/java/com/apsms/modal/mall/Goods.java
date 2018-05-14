@@ -27,7 +27,6 @@ public class Goods implements Serializable {
     @Column(name="parts_brand")
     private String brand;
 
-//    @OneToMany(cascade={CascadeType.ALL, CascadeType.REMOVE},fetch=FetchType.EAGER)
     @OneToMany(cascade={CascadeType.ALL})
     @JoinColumn(name = "goods_id", referencedColumnName = "id")
     private List<Img> imgs;
@@ -40,6 +39,16 @@ public class Goods implements Serializable {
     private String type;
     @Column(name="sales")
     private int sales;
+    @Column(name="stock")
+    private int stock;
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
