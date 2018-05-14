@@ -93,31 +93,36 @@ class Users extends Component {
       ));
 
       const columns = [{
-        title: 'name',
+        title: 'username',
         dataIndex: 'username',
         key: 'username',
+        width: '15%',
       }, 
       {
         title: 'register_date',
         dataIndex: 'regDate',
         key: 'regDate',
+        width: '15%',
       }, 
 
       {
         title: 'phone',
         dataIndex: 'phone',
         key: 'phone',
+        width: '10%',
       }, 
       
       {
         title: 'email',
         dataIndex: 'email',
         key: 'email',
+        width: '15%',
       },
       
       {
         title: 'role',
         key: 'roles.name',
+        width: '25%',
         render: (text, record, index) => (
           text.roles.map((role) => {
             return (
@@ -132,6 +137,7 @@ class Users extends Component {
       {
         title: 'Action',
         key: 'action',
+        width: '20%',
         render: (text, record, index) => (
           <span>
               <Button type="primary" onClick={() => this.indexData(index)}>Edit</Button>

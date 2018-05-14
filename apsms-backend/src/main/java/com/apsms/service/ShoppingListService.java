@@ -3,6 +3,7 @@ package com.apsms.service;
 import com.apsms.modal.mall.Order;
 import com.apsms.modal.mall.ShoppingCart;
 import com.apsms.modal.mall.ShoppingList;
+import com.apsms.modal.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 

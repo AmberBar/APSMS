@@ -39,6 +39,12 @@ export function ShoppingCart({history, dispatch, shopping_cart}) {
                 }
             });
         },
+        clearCart(values) {
+            dispatch({
+                type: "shopping_cart/clearCart",
+                payload: {}
+            });
+        }
     }
 
     const searchProps = {

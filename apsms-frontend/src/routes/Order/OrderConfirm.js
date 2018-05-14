@@ -19,8 +19,6 @@ export function OrderConfirm({history, dispatch, order_confirm}) {
         }
     }
 
-    console.log("///")
-    console.log(shoppingList)
     return(
         <MainLayout >
             <div className={styles.goods_container}>

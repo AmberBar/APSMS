@@ -24,3 +24,10 @@ export async function queryAll(params) {
     method: "get"
   })
 }
+
+export async function clearCart() {
+  return request({
+    url: `/shoppingCart/clearCart`,
+    method: "delete"
+  })
+}

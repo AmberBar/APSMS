@@ -1,8 +1,8 @@
 import fetch from 'dva/fetch';
 import axios from 'axios';
-import notie from 'notie';
-import { getAPIDomain } from '../utils/config.js';
+import { getAPIDomain, loginUrl } from '../utils/config.js';
 import { localStorageService } from "../utils/common.js"
+import $ from 'jquery'
 
 function parseJSON(response) {
   return response.json();
@@ -25,8 +25,14 @@ export default function request(
       // console.log(getAPIDomain())
     const token = localStorageService.getItem("user") != {}? localStorageService.getItem("user") : " ";
 
-    // console.log("****************")
-    // console.log(token)
+    let freeUrl = ["/users/login", "/users/register", "/goods/findAll"];
+    let hasToken = $.inArray(options.url, freeUrl);
+    if (hasToken < 0) {
+      if (" " == token || $.isEmptyObject(token)) {
+        window.location.href = loginUrl
+      }
+    }
+
     let defaultOptions = {    
       baseURL: getAPIDomain(),    
       headers: {

@@ -30,7 +30,7 @@ class EditModal extends Component {
             }
             values.roles = params
             this.props.submit(values);
-          //  console.log('Received values of form: ', values);
+         //  console.log('Received values of form: ', values);
           }
         });
       }
@@ -151,7 +151,6 @@ class EditModal extends Component {
                         rules: [{ required: false, message: 'Please input your username!', whitespace: true }],
                         initialValue: text.password
                     })(  
-                      // <Input disabled="true"/>
                       <div></div>
                     )}
                   </FormItem>
@@ -169,14 +168,14 @@ class EditModal extends Component {
                         }],
                     })(
                         <div>
-                          <Tree
-                              checkable
-                              onCheck={this.onCheck}
-                        >
-                              <TreeNode title="user" key="USER"  />
-                              <TreeNode title="admin" key="ADMIN" />
-                              <TreeNode title="customer_service" key="CS" />
-                        </Tree>
+                            <Tree
+                                checkable
+                                onCheck={this.onCheck}
+                          >
+                                <TreeNode title="user" key="ROLE_USER"  />
+                                <TreeNode title="admin" key="ROLE_ADMIN" />
+                                <TreeNode title="customer_service" key="ROLE_CS" />
+                            </Tree>
                         </div>
                      )} 
                 </FormItem>

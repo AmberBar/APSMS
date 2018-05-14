@@ -32,11 +32,26 @@ export async function updateUser(params) {
   })
 }
 
+export async function updateInfo(params) {
+  return request({
+    url: `/users/update/info`,
+    data: params,
+    method: "put"
+  })
+}
+
 export async function deleteUser(params) {
   return request({
     url: `/users/delete`,
     data: params,
     method: "delete"
+  })
+}
+
+export async function getUserInfo() {
+  return request({
+    url: `/users/getUserInfo`,
+    method: "get"
   })
 }
   

@@ -30,4 +30,6 @@ public interface UserService {
     public User getCurrentUser();
 
     String getJwtToken(String username, String password);
+
+    User updateInfo(User user);
 }

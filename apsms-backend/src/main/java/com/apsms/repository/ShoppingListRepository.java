@@ -25,6 +25,6 @@ public interface ShoppingListRepository extends JpaRepository<ShoppingList, Inte
     @Query(value = "update shopping_list set shopping_cart_id = null where id = ?1", nativeQuery = true)
     ShoppingList update(Integer shoppingListId);
 
-    @Query(value = "select b from ShoppingList b where b.goods.name like %:name% and b.user.id=:userId and order_id is null  ")
+    @Query(value = "select b from ShoppingList b where b.goods.name like %:name% and b.user.id=:userId and order_id is null and shopping_cart_id is not null ")
     Page<ShoppingList> findShoppingListByUserPageable(@Param("name") String name, @Param("userId") Integer userId, Pageable pageable);
 }

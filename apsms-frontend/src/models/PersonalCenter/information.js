@@ -1,23 +1,30 @@
 
 import { routerRedux } from 'dva/router';
 import { message } from "antd";
-import { register, updateUser, deleteUser } from "../../services/user.js"
+import { getUserInfo, updateInfo} from "../../services/user.js"
+import { findAllAddress} from "../../services/address"
 
 export default {
 
     namespace: 'personal_information',
   
     state: {
-
+      user: {},
+      addresses: []
     },
   
     subscriptions: {
       setup({ dispatch, history }) {  
-          // eslint-disable-line
           history.listen(location => {
             if (location.pathname === "/personal/information") {
               dispatch({
-                type: 'findOne',
+                type: 'getUserInfo',
+                payload: {
+
+                }
+              });
+              dispatch({
+                type: 'findAllAddress',
                 payload: {
 
                 }
@@ -28,17 +35,47 @@ export default {
     },
   
     effects: {
-      *updateUser({ payload }, { put, call }) {    
-        const data = yield call(updateUser, payload);
-        if (data.data.success === true ) {
- 
+      *getUserInfo({ payload }, { put, call }) {    
+        const result = yield call(getUserInfo);
+        if (result.data.success === true ) {
+          let user = result.data.data
+          yield put({
+            type: 'save',
+            payload: {
+              user: user
+            } 
+          })
         } else {
-          message.warn(data.data.data);
+          message.warn(result.data.data);
         }
       },
-      *findOne({ payload }, { put, call }) {
-        
+      *findAllAddress({ payload }, { put, call }) {
+        let result = yield call(findAllAddress)
+        if (result.data.success === true) {
+          yield put({
+            type: "save",
+            payload: {
+              addresses: result.data.data
+            }
+          })
+        } else {
+          message.error(result.data.data)
+        }
       },
+      *updateInfo({ payload }, { put, call }) {
+        let result = yield call(updateInfo, payload)
+        if (result.data.success === true) {
+          yield put({
+            type: "save",
+            payload: {
+              user: result.data.data
+            }
+          })
+          message.success("update success!")
+        } else {
+          message.error("update fail!")
+        }
+      }
     },
   
     reducers: {

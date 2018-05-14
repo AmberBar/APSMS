@@ -17,4 +17,6 @@ public interface ShoppingCartService {
     ShoppingCart updateShoppingCart(ShoppingCart shoppingCart);
 
     Page<ShoppingCart> queryAll(final String name, int pageNumber, int pageSize);
+
+    void clearCart();
 }

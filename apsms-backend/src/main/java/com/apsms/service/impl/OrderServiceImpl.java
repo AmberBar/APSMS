@@ -82,4 +82,12 @@ public class OrderServiceImpl implements OrderService {
         };
         return orderRepository.findAll(spec, pageable);
     }
+
+    @Override
+    public Order updateOrderPaid(Integer id) {
+        Order oldOrder = orderRepository.findOne(id);
+
+        oldOrder.setStatus("paid");
+        return orderRepository.save(oldOrder);
+    }
 }

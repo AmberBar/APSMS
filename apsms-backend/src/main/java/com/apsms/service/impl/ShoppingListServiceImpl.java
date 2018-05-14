@@ -47,7 +47,6 @@ public class ShoppingListServiceImpl implements ShoppingListService {
             shoppingCart =  shoppingCartService.createShoppingCart(user);
         }
 
-        System.out.println(shoppingList);
         ShoppingList oldShoppingList = shoppingListRepository.findByShoppingListByUserAndGoods(user.getId(), shoppingList.getGoods().getId());
 
         if (oldShoppingList == null) {

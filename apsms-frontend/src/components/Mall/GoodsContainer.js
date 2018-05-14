@@ -68,24 +68,6 @@ class GoodsContainer extends Component {
                    <Link to={"/apsms/detail?id=" + goods.id}>
                      <List.Item
                      >
-                       {/* <div id="goods_detail_container">
-                         <div className={styles.img_container}>
-                           <img src={goods.imgs[0].name}/>
-                         </div>
-                         <div className={styles.shopping_container}>
-                           <div className={styles.div_01}>
-                             <label className={styles.price}>
-                               ${goods.price}
-                             </label>
-                             <label className={styles.count}>
-                               已出售: 10000
-                             </label>
-                           </div>
-                           <label className={styles.name}>
-                             {goods.name}
-                           </label>
-                         </div>
-                       </div> */}
                          <Card
                           hoverable
                           style={{ width: 300 , "margin-left": 30}}
@@ -94,11 +76,10 @@ class GoodsContainer extends Component {
                               <img alt="goods_imgs" src={goods.imgs[0].name} />
                             </div>
                           }
-                          actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
+                          
                         >
                           <Meta
                             style={{ height: 80}}
-                        
                             title={goods.price}
                             description={goods.name}
                           />

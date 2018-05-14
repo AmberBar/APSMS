@@ -4,10 +4,22 @@ import MainLayout from '../../components/MainLayout/MainLayout';
 import PersonalInformation from "../../components/PersonalCenter/PersonalInformation"
 import styles from "./Information.less"
 export function Information({history, dispatch, personal_information}) {
+    let { user, addresses } = personal_information
+
+    let userProps = {
+        user,
+        addresses,
+        submit(params) {
+            dispatch({
+                type: 'personal_information/updateInfo',
+                payload: params
+            })
+        }
+    }
 
     return(
         <MainLayout >
-            <PersonalInformation />
+            <PersonalInformation {...userProps}/>
         </MainLayout>
     );
 }

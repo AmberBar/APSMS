@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
@@ -71,5 +72,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             }
         };
         return shoppingCartRepository.findAll(spec, pageable);
+    }
+
+    @Override
+    public void clearCart() {
+        User user = userService.getCurrentUser();
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUser(user);
+        List<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
+        shoppingCart.setShoppingLists(shoppingLists);
+        shoppingCartRepository.save(shoppingCart);
     }
 }

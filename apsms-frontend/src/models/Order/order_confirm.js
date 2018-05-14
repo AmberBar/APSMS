@@ -108,6 +108,14 @@ export default {
         let result = yield call(createOrder, payload)
         if (result.data.success === true) {
           message.success("Create order success!")
+          console.log(result.data.data)
+          let out_trade_no = result.data.data.id
+          let total_amount = result.data.data.total
+          //订单名称
+          let subject = result.data.data.id
+          yield put(
+            routerRedux.push("/alipay?out_trade_no=" + out_trade_no + "&total_amount="　+　total_amount + "&subject=" + subject)
+          )
         } else {
           message.error("create fail!")
         }

@@ -44,6 +44,7 @@ class AllGoods extends Component {
       {
         title: 'imgs',
         key: 'imgs',
+        width: "10%",
         render: (text, record, index) => (
           text.imgs.length != 0? <img className={styles.img} src={text.imgs[0].name} /> : "no img"       
         ),
@@ -52,28 +53,33 @@ class AllGoods extends Component {
         title: 'name',
         dataIndex: 'name',
         key: 'name',
+        width: "30%"
       }, 
       {
         title: 'price',
         dataIndex: 'price',
         key: 'price',
+        width: "10%",
       }, 
       
       {
         title: 'brand',
         dataIndex: 'brand',
         key: 'brand',
+        width: "10%",
       },
 
       {
         title: 'type',
         dataIndex: 'type',
         key: 'type',
+        width: "10%",
       },
 
       {
         title: 'createDate',
         dataIndex: 'createDate',
+        width: "10%",
         render: (text, record, index) => (
           <span>
             {moment(text.createDate).format("YYYY-MM-DD")}

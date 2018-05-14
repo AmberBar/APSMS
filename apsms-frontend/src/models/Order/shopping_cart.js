@@ -5,6 +5,7 @@ import { message, Select } from "antd";
 import { findAllOrders } from "../../services/order"
 import { format } from "url";
 import { updateNumber, deleteData, queryAll} from "../../services/shoppingList"
+import { clearCart } from "../../services/shoppingCart"
 
 export default {
 
@@ -64,7 +65,6 @@ export default {
           const result = yield call(queryAll, params);
           if (result.data.success === true) {
             let shoppingList = result.data.data.content
-            console.log()
             let params = {
               pageNumber: result.data.data.number,
               total: result.data.data.totalElements,
@@ -113,13 +113,30 @@ export default {
                   name: "",
                   pageNumber: 0,
                   pageSize: 10,
-                }
+                },
               }
             });
           } else {
             message.error("update number failed!")
           } 
-        }
+        },
+        *clearCart({ payload }, { put, call }) {
+          let result = yield call(clearCart, payload)
+          if (result.data.success === true) {
+            yield put({
+              type: 'init',
+              payload: {
+                pagination: {
+                  name: "",
+                  pageNumber: 0,
+                  pageSize: 10,
+                }
+              }
+            });
+          } else {
+            message.error("clearCart number failed!")
+          } 
+        },
     },
   
     reducers: {

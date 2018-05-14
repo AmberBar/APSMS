@@ -20,32 +20,18 @@ class OrderConfirm extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        
         let total = 0;
-
         nextProps.shoppingList.map((order) => {
             return total += order.sum
         });
-
         this.setState({
             dataSource: nextProps.shoppingList,
             addresses: nextProps.addresses,
             total: total
         })
-
-        // if(nextProps.addresses.length >= 1) {
-        //     this.setState({
-        //         value: nextProps.addresses[0].id
-        //     })
-        // }
-    }
-
-    onChange = (value) => {
-        
     }
 
     handleChooseAddress = (address) => {
-        console.log(address)
         this.setState({
             address: address
         })
@@ -64,7 +50,6 @@ class OrderConfirm extends Component {
             status: "obligations",
             total: this.state.total
         }
-
         this.props.submit(param)
     }
 

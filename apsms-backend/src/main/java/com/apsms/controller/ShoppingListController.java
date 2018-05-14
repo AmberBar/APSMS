@@ -78,5 +78,4 @@ public class ShoppingListController {
     ) {
         return new JsonResponse(true, shoppingListService.findAll(name, pageNumber, pageSize));
     }
-
 }

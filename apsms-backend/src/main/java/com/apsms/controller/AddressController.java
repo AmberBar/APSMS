@@ -21,7 +21,6 @@ public class AddressController {
     @GetMapping("/findAll")
     public JsonResponse findAll() {
         List<Address> addresses = addressService.findAll();
-
         return new JsonResponse(true, addresses);
     }
 }

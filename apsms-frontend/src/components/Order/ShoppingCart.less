@@ -1,15 +1,12 @@
 .confirm_contrainer {
     width: 80%;
     height: 50px;
-    background: gray;
+    background: rgb(231, 178, 196);
     position: fixed;
     bottom: 0;
+    color: antiquewhite;
 
     .selected_items {
-        position: fixed;
-        line-height: 50px;
-        right: 50%;
-
         .selected_number {
             font-size: 20px;
             color: orangered;
@@ -17,10 +14,6 @@
     }
 
     .selected_items_total {
-        position: fixed;
-        line-height: 50px;
-        right: 30%;
-
         .selected_number {
             font-size: 20px;
             color: orangered;
@@ -28,13 +21,21 @@
     }
 }
 
-.confirm_button {
-    position: fixed;
-    right: 5%;
-    bottom: 1%;
-}
-
 .img {
     width: 80px;
     height: 80px;
+}
+
+.cart_is_null {
+    margin: auto;
+    color: rgb(173, 173, 173);
+    font-size: 3rem;
+    display: flex;
+    justify-content: center;
+}
+
+.confirm_contrainer {
+    display: flex;
+    justify-content: space-around;
+    line-height: 50px;
 }

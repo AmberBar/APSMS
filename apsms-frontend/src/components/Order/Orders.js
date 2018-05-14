@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {  Table, Button } from 'antd';
+import {  Table, Button, Icon } from 'antd';
 import { Link } from 'react-router-dom'
 import * as moment from "moment"
 import styles from "./Orders.less"
@@ -115,7 +115,7 @@ class AllGoods extends Component {
           key: 'action',
           width: '30%',
           render: (text, record, index) => (
-            <Action />
+            <Action status={text.status}/>
           )
         }
       ];
@@ -140,8 +140,29 @@ export class　Action extends Component{
   }
 
   render() {
-    return (
-      <div></div>
-    );
+
+    switch(this.props.status)
+      {
+        case "obligations":
+          return (
+            <div>
+              <Link to="">
+                pay for
+              </Link>
+            </div>
+          );
+          break;
+        case "paid":
+          return (
+            <div>
+              paid
+            </div>
+          );
+          break;
+        default: 
+          return (
+            <div></div>
+          );
+      }
   }
 }

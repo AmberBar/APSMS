@@ -76,6 +76,18 @@ function RouterConfig({ history}) {
         models: () => [import('./models/Order/shopping_cart')],
         component: () => import('./routes/Order/ShoppingCart'),
       }
+      ,
+      {
+        path: `/alipay`,
+        models: () => [import('./models/Alipay/alipay')],
+        component: () => import('./routes/Alipay/Alipay'),
+      }
+      ,
+      {
+        path: `/alipay/return`,
+        models: () => [import('./models/Alipay/alipay_return')],
+        component: () => import('./routes/Alipay/Return'),
+      }
     ]
     return (
       <Router history={history}>

@@ -16,4 +16,6 @@ public interface OrderService {
     List<Order> orders(User user);
 
     Page<Order> queryAll(final String name, int pageNumber, int pageSize);
+
+    Order updateOrderPaid(Integer out_trade_no);
 }

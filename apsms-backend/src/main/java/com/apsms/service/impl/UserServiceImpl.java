@@ -126,4 +126,17 @@ public class UserServiceImpl implements UserService {
 
         return null;
     }
+
+    @Override
+    public User updateInfo(User user) {
+        User oldUser = userRepository.findOne(user.getId());
+        oldUser.setEmail(user.getEmail());
+        oldUser.setPhone(user.getPhone());
+
+        if(!oldUser.getPassword().equals(user.getPassword())) {
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            oldUser.setPassword(encoder.encode(user.getPassword()));
+        }
+        return userRepository.save(oldUser);
+    }
 }

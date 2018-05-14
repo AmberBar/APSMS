@@ -48,8 +48,6 @@ class ShoppingCart extends Component {
         }
         let total = 0.0
         params.map((id) => {
-            console.log("////")
-            console.log(id)
             this.state.dataSource.map( (shoppingList) => {
                 console.log(shoppingList)
                 if (id == shoppingList.id) {
@@ -81,12 +79,16 @@ class ShoppingCart extends Component {
         this.props.submit(this.state.checkList)
     }
 
+    clearCart = () => {
+        this.props.clearCart()
+    }
+
     render() {
         if ($.isEmptyObject(this.state.dataSource)) {
-            return <div></div>
+            return <div className={styles.cart_is_null}>
+                cart is null
+            </div>
         }
-
-        console.log(this.state.dataSource)
 
         const columns = [
             {
@@ -100,7 +102,7 @@ class ShoppingCart extends Component {
             }
             ,
             {
-                title: 'goods imgs',
+                // title: 'goods imgs',
                 key: 'imgs',
                 width: "10%",
                 render: (text, record, index) => (
@@ -109,7 +111,7 @@ class ShoppingCart extends Component {
             }
             , 
             {
-                title: "goods name",
+                title: "name",
                 key: "goods name",
                 render: (text) => {
                     return (
@@ -119,7 +121,7 @@ class ShoppingCart extends Component {
             }
             ,
             {
-                title: "goods number",
+                title: "number",
                 key: "goods number",
                 width: "10%",
                 render: (text, record, index) => {
@@ -157,6 +159,9 @@ class ShoppingCart extends Component {
               onChange={this.handleTableChange}
             />
             <div className={styles.confirm_contrainer}>
+                <span>
+                    <Button type="primary" onClick={this.clearCart}>clear cart</Button>
+                </span>
                 <span className={styles.selected_items}>
                     selected items number:
                     <span className={styles.selected_number}>{this.state.checkNumber}</span>

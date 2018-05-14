@@ -52,6 +52,15 @@ public class UserController {
         return new JsonResponse(true, users);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/getUserInfo")
+    public JsonResponse usersAll(
+
+    ) {
+        User user= userService.getCurrentUser();
+        return new JsonResponse(true, user);
+    }
+
     @PostMapping("/login")
     public JsonResponse users(@RequestParam("username") String username,
                             @RequestParam("password") String password) throws Exception{
@@ -99,7 +108,6 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete")
     public JsonResponse deleteUser(@RequestBody  User user) {
-        System.out.println("********************");
         System.out.println(user);
         userService.deleteUser(user);
         return new JsonResponse(true, "delete success");
@@ -108,6 +116,11 @@ public class UserController {
     @PutMapping("/update")
     public JsonResponse UpdateUser(@RequestBody User user) {
         return new JsonResponse(true, userService.updateUser(user));
+    }
+
+    @PutMapping("/update/info")
+    public JsonResponse updateInfo(@RequestBody User user) {
+        return new JsonResponse(true, userService.updateInfo(user));
     }
 
     /**

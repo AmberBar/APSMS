@@ -30,7 +30,7 @@ public class User implements Serializable {
     @Column(name="phone")
     private String phone;
 
-    @OneToMany(cascade={CascadeType.ALL, CascadeType.REMOVE},fetch=FetchType.EAGER)
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private List<Role> roles;
 
