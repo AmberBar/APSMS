@@ -115,7 +115,7 @@ class EditModal extends Component {
         return(
             <div>
                 <Modal
-                title="Create or Edit User"
+                title="Edit User"
                 wrapClassName="vertical-center-modal"
                 visible={this.state.editVisible}
                 onOk={() => this.setModal2Visible(false)}
@@ -140,12 +140,6 @@ class EditModal extends Component {
                     )}
                   </FormItem>
                   <FormItem
-                    {...formItemLayout}
-                    label={(
-                        <span>
-                        password&nbsp;
-                        </span>
-                    )}
                     >
                     {getFieldDecorator('password', {
                         rules: [{ required: false, message: 'Please input your username!', whitespace: true }],
@@ -209,19 +203,6 @@ class EditModal extends Component {
                       <Input />
                   )}
                 </FormItem>
-                  <FormItem
-                    {...formItemLayout}
-                    label="isAdmin"
-                    >
-                    {getFieldDecorator('admin', {
-                        rules: [ {
-                        required: false, message: 'Please input your E-mail!',
-                        }],
-                        initialValue:  Boolean(text.admin)
-                    })(
-                        <Switch defaultChecked={ Boolean(text.admin)}/>,
-                    )}
-                  </FormItem>
                     <FormItem
                     {...formItemLayout}
                     label="Phone Number"

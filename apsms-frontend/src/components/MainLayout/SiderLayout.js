@@ -39,10 +39,6 @@ class SiderLayout extends Component {
                     <Icon type="shopping_cart" />shoppingCart
                 </Link>
             </Menu.Item>
-    
-            <Menu.Item key="customer_service">
-                <Icon type="customer_service" />Customer service
-            </Menu.Item>
             <Menu.Item key="personal_information">
                 <Link to="/personal/information">
                     <Icon type="personal_information" />Personal information

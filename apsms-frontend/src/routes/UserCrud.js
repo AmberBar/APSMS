@@ -9,7 +9,6 @@ import CreateModal from '../components/User/CreateModal';
 import EditModal from "../components/User/EditModal"
 import {Button} from "antd"
 
-// let index = -1;
 export function UserCrud({history, dispatch, user}) {
 
     let { users, pagination , showModal, index, showCreateModal} = user
@@ -62,12 +61,6 @@ export function UserCrud({history, dispatch, user}) {
         showCreateModal,
         submit(values) {
             delete values.confirm
-            // dispatch({
-            //     type: "user/save",
-            //     payload: {
-            //         showCreateModal: false
-            //     }
-            // });
             dispatch({
                 type: 'user/registerUser',
                 payload: values

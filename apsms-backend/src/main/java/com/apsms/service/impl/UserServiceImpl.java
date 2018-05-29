@@ -100,6 +100,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(User user) {
+        User oldUser = userRepository.findOne(user.getId());
+        user.setRegDate(oldUser.getRegDate());
         User newUser = userRepository.save(user);
         return newUser;
     }

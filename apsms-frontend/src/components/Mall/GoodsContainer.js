@@ -76,7 +76,6 @@ class GoodsContainer extends Component {
                               <img alt="goods_imgs" src={goods.imgs[0].name} />
                             </div>
                           }
-                          
                         >
                           <Meta
                             style={{ height: 80}}

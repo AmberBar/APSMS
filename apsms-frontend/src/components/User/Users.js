@@ -5,7 +5,7 @@ import { register } from '../../services/user';
 import Register from "../login/Register"
 import CreateModal from './CreateModal';
 import * as moment from "moment"
-import {Table, Modal, Form, Switch, Input, Select, Button, AutoComplete } from 'antd';
+import {Table, Modal, Form, Switch, Input, Select, Button, AutoComplete, Popconfirm } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
@@ -58,9 +58,11 @@ class Users extends Component {
     indexData (idx)  {
       this.props.editUser(idx)
     }
-    handleDelete(idx) {
+
+    confirm(idx) {
       this.props.delete(idx);
     }
+    
     render() {
       const { getFieldDecorator } = this.props.form;
       const { autoCompleteResult } = this.state;
@@ -140,8 +142,10 @@ class Users extends Component {
         width: '20%',
         render: (text, record, index) => (
           <span>
-              <Button type="primary" onClick={() => this.indexData(index)}>Edit</Button>
-              <Button type="primary" onClick={() => this.handleDelete(index)}>Delete</Button>
+            <Button type="primary" onClick={() => this.indexData(index)}>Edit</Button>
+            <Popconfirm title="Are you sure？" onConfirm={() => this.confirm(index)} okText="Yes" cancelText="No">
+              <Button type="primary">Delete</Button>
+            </Popconfirm>
           </span>
         ),
       }
