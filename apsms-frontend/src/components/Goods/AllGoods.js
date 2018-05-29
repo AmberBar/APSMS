@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {  Table, Button, InputNumber } from 'antd';
+import {  Table, Button, InputNumber, Popconfirm } from 'antd';
 import styles from './AllGoods.less'
 import { Link } from 'react-router-dom'
 import * as moment from "moment"
@@ -115,9 +115,11 @@ class AllGoods extends Component {
         render: (text, record, index) => (      
           <span>
             <Link to={"goods/edit?id=" + this.state.dataSource[index].id}>
-              <Button type="primary" size="small" >Edit</Button>
+              <Button  className={styles.action_button} type="primary" size="small" >Edit</Button>
             </Link>
-            <Button type="primary" size="small" className={styles.action_button} size="small" onClick={() => this.handleDelete(index)}>Delete</Button>
+            <Popconfirm title="Are you sure？" onConfirm={() => this.handleDelete(index)} okText="Yes" cancelText="No">
+              <Button className={styles.action_button}  type="primary" size="small">Delete</Button>
+            </Popconfirm>
           </span>
         ),
       }

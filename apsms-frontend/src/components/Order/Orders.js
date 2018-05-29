@@ -31,6 +31,10 @@ class AllGoods extends Component {
       });
     }
 
+    handlePaied = (text) => {
+      this.props.toPaied(text)
+    }
+
     render() {
       const shoppingListsColums = [
         {
@@ -115,7 +119,7 @@ class AllGoods extends Component {
           key: 'action',
           width: '30%',
           render: (text, record, index) => (
-            <Action status={text.status}/>
+            <Action status={text.status} handlePaied={() => this.handlePaied(text)}/>
           )
         }
       ];
@@ -139,6 +143,10 @@ export class　Action extends Component{
     super(props);
   }
 
+  handlePaied = () => {
+    this.props.handlePaied();
+  }
+
   render() {
 
     switch(this.props.status)
@@ -146,15 +154,15 @@ export class　Action extends Component{
         case "obligations":
           return (
             <div>
-              <Link to="">
+              <a onClick={() => this.handlePaied()}>
                 pay for
-              </Link>
+              </a>
             </div>
           );
           break;
         case "paid":
           return (
-            <div>
+            <div >
               paid
             </div>
           );

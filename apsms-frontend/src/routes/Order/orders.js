@@ -23,6 +23,12 @@ export function Orders({history, dispatch, orders}) {
                     pagination
             });
         },
+        toPaied(order) {
+                dispatch({
+                type: "orders/toPaied",
+                payload: order
+            });
+        }
     }
     
 
