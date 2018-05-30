@@ -15,3 +15,20 @@ export async function findAllOrders(params) {
         params: params
     })
 }
+
+export async function queryOrders(params) {
+    return request({
+        url: `/order/findAllOrders`,
+        method: `get`,
+        params: params
+    })
+}
+
+export async function delivery(params) {
+    return request({
+        url: `/order/delivery`,
+        method: `get`,
+        params: params
+    })
+}
+

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {  Table, Button, InputNumber, Checkbox, message} from 'antd';
+import {  Table, Button, InputNumber, Checkbox, message, Popconfirm} from 'antd';
 import { Link } from 'react-router-dom'
 import * as moment from "moment"
 import $ from 'jquery';
@@ -102,7 +102,6 @@ class ShoppingCart extends Component {
             }
             ,
             {
-                // title: 'goods imgs',
                 key: 'imgs',
                 width: "10%",
                 render: (text, record, index) => (
@@ -144,7 +143,9 @@ class ShoppingCart extends Component {
                 width: "20%",
                 render: (text, record, index) => (
                   <span>
-                      <Button type="primary" onClick={() => this.handleDelete(text.id)}>Delete</Button>
+                        <Popconfirm title="Are you sure delete this goods?" onConfirm={() => this.handleDelete(text.id)} okText="Yes" cancelText="No">
+                            <Button type="primary" >Delete</Button>
+                        </Popconfirm>
                   </span>
                 ),
               }

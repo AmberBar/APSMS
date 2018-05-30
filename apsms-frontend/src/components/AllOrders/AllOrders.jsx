@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import {  Table, Button, Icon } from 'antd';
 import { Link } from 'react-router-dom'
 import * as moment from "moment"
-import styles from "./Orders.less"
+import styles from "./AllOrders.less"
 
-class AllGoods extends Component {
+class AllOrders extends Component {
 
     constructor(props) {
         super(props);
@@ -33,6 +33,11 @@ class AllGoods extends Component {
 
     handlePaied = (text) => {
       this.props.toPaied(text)
+    }
+
+    handleDelivery = (text) => {
+      console.log(text)
+      this.props.delivery(text.id)
     }
 
     render() {
@@ -119,7 +124,9 @@ class AllGoods extends Component {
           key: 'action',
           width: '30%',
           render: (text, record, index) => (
-            <Action status={text.status} handlePaied={() => this.handlePaied(text)}/>
+            <Action status={text.status} handlePaied={() => this.handlePaied(text)}
+            handleDelivery={() => this.handleDelivery(text)}
+            />
           )
         }
       ];
@@ -135,7 +142,7 @@ class AllGoods extends Component {
     }
 }   
 
-export default AllGoods;
+export default AllOrders;
 
 export class　Action extends Component{
   
@@ -145,6 +152,10 @@ export class　Action extends Component{
 
   handlePaied = () => {
     this.props.handlePaied();
+  }
+
+  handleDelivery = () => {
+    this.props.handleDelivery();
   }
 
   render() {
@@ -162,16 +173,21 @@ export class　Action extends Component{
           break;
         case "paid":
           return (
-            <div >
-              paid
+            <div>
+              <div >
+                paid
+              </div>
+              <Button onClick={this.handleDelivery}>
+                  delivery
+              </Button>
             </div>
           );
           break;
-        case "deliveried":
-          return (
-            <Button onClick={this.handleDelivery}>
-                Be evaluated
-            </Button>
+        case "deliveried": 
+          return(
+            <div >
+              deliveried
+            </div>
           );
           break;
         default: 

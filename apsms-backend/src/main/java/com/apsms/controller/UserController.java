@@ -62,8 +62,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public JsonResponse users(@RequestParam("username") String username,
-                            @RequestParam("password") String password) throws Exception{
+    public JsonResponse users( @RequestParam("username") String username,
+                                @RequestParam("password") String password) throws Exception{
         User user = userService.findUserByName(username);
 
         if (user == null) {
@@ -100,9 +100,20 @@ public class UserController {
         if (oldUser != null) {
             throw new IllegalArgumentException("username is exit");
         }
+
         User newUser = userService.createUser(user);
 
-        return new JsonResponse(true, newUser);
+        UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken( newUser.getUsername(), user.getPassword());
+
+        Authentication authentication = authenticationManager.authenticate(upToken);
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(newUser.getUsername());
+
+        String token = jwtTokenUtil.generateToken(userDetails);
+
+        return new JsonResponse(true,  token);
     }
 
     @PreAuthorize("hasRole('ADMIN')")

@@ -3,6 +3,7 @@ import { Link} from 'react-router-dom'
 import { Table, Button, Modal, Form, Input} from 'antd'
 import $ from "jquery"
 import styles from "./PersonalInformation.less"
+import * as moment from "moment"
 
 const FormItem = Form.Item;
 
@@ -169,7 +170,7 @@ class PersonalInformation extends Component {
                             {user.email}
                         </p>
                         <p>
-                            {user.regDate}
+                            {moment(user.regDate).format("YYYY-MM-DD")}
                         </p>
                     </div>
                     <Button type="primary" onClick={this.handleEditInfo}>Edit Personal Info</Button>
@@ -179,6 +180,7 @@ class PersonalInformation extends Component {
                         visible={this.state.visible}
                         onOk={this.handleOk}
                         onCancel={this.handleCancel}
+                        destroyOnClose
                         >
                         <Form onSubmit={this.handleSubmit}>
                              <FormItem
@@ -262,9 +264,7 @@ class PersonalInformation extends Component {
                         pagination={false}
                     />
                 </div>
-                
                     <CreateAddress />
-                
             </div>      
         );
     }

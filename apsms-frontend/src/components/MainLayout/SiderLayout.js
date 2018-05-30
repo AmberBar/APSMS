@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Link } from 'dva/router';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { localStorageService } from "../../utils/common.js"
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -16,6 +17,12 @@ class SiderLayout extends Component {
     console.log(collapsed);
     this.setState({ collapsed });
   }
+
+
+  handleLogout() {
+    localStorageService.removeItem("user")
+  }
+
   render() {
     return (
         <Sider
@@ -26,7 +33,7 @@ class SiderLayout extends Component {
         <div className="logo" />
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
             <Menu.Item key="/login">
-                <Link to="/login"><Icon type="bars" />Login</Link>
+                <Link to="/login"><Icon type="login" />Login</Link>
             </Menu.Item>
             <Menu.Item key="home">
                 <Link to="/apsms">
@@ -36,12 +43,14 @@ class SiderLayout extends Component {
             </Menu.Item>
             <Menu.Item key="shopping_cart">
                 <Link to="/shoppingCart">
-                    <Icon type="shopping_cart" />shoppingCart
+                    <Icon type="shopping-cart" />
+                    shoppingCart
                 </Link>
             </Menu.Item>
             <Menu.Item key="personal_information">
                 <Link to="/personal/information">
-                    <Icon type="personal_information" />Personal information
+                    <Icon type="profile" />
+                    Personal information
                 </Link>
             </Menu.Item>
             <Menu.Item key="my_order">
@@ -66,7 +75,16 @@ class SiderLayout extends Component {
                 <Menu.Item key="users">
                     <Link to="/users">CURD Users</Link>
                 </Menu.Item>
+                <Menu.Item key="allOrders">
+                    <Link to="/allOrders">All Orders</Link>
+                </Menu.Item>
             </SubMenu>
+            <Menu.Item key="logout">
+                <Link  to="/login" onClick={() => this.handleLogout()}>
+                    <Icon type="logout" />
+                    logout
+                </Link>
+            </Menu.Item>
         </Menu>
         </Sider>
     );

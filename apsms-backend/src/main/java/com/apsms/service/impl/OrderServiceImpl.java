@@ -90,4 +90,37 @@ public class OrderServiceImpl implements OrderService {
         oldOrder.setStatus("paid");
         return orderRepository.save(oldOrder);
     }
+
+    @Override
+    public Page<Order> findAllOrders(final String name, int pageNumber, int pageSize) {
+
+        Pageable pageable=new PageRequest(pageNumber, pageSize);
+
+        Specification<Order> spec = new Specification<Order>() {
+
+            @Override
+            public Predicate toPredicate(Root<Order> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+
+                Path<String> status = root.get("status");
+
+//                Predicate p1 = cb.equal(status,  name);
+
+                Predicate p2 = cb.like(status, "%" + name + "%");
+
+                Predicate p = cb.and(p2);
+
+                return p;
+            }
+        };
+        return orderRepository.findAll(spec, pageable);
+
+    }
+
+    @Override
+    public Order delivery(Integer id) {
+        Order order = orderRepository.findOne(id);
+        order.setStatus("deliveried");
+
+        return orderRepository.save(order);
+    }
 }

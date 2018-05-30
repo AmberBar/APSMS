@@ -72,6 +72,12 @@ function RouterConfig({ history}) {
       }
       ,
       {
+        path: `/allOrders`,
+        models: () => [import('./models/Order/all_orders')],
+        component: () => import('./routes/Order/AllOrders'),
+      }
+      ,
+      {
         path: `/shoppingCart`,
         models: () => [import('./models/Order/shopping_cart')],
         component: () => import('./routes/Order/ShoppingCart'),

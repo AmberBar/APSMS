@@ -36,4 +36,20 @@ public class OrderController {
 
         return new JsonResponse(true, orderService.queryAll(name,pageNumber, pageSize ));
     }
+
+    @GetMapping("/findAllOrders")
+    public JsonResponse findAllOrder(
+            @RequestParam("name") String name,
+            @RequestParam("pageNumber") int pageNumber,
+            @RequestParam("pageSize") int pageSize
+    ) {
+        return new JsonResponse(true, orderService.findAllOrders(name,pageNumber, pageSize ));
+    }
+
+    @GetMapping("/delivery")
+    public JsonResponse delivery(
+            @RequestParam("id") int id
+    ) {
+        return new JsonResponse(true, orderService.delivery(id));
+    }
 }

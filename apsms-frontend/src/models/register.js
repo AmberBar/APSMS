@@ -2,6 +2,7 @@ import { register } from "../services/user.js"
 import { routerRedux } from 'dva/router';
 import { connectAdvanced } from "react-redux";
 import { message } from 'antd';
+import { localStorageService } from "../utils/common.js"
 
 export default {
 
@@ -34,6 +35,7 @@ export default {
         *registerUser({ payload }, { put, call }) {    
           const data = yield call(register, payload);
           if (data.data.success === true ) {
+            localStorageService.setItem("user", data.data.data);
             yield put(routerRedux.push('/apsms'));
           } else {
             message.warn(data.data.data);

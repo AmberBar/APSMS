@@ -1,5 +1,6 @@
 package com.apsms.service.impl;
 
+import com.apsms.Exception.UserNotExistExcepion;
 import com.apsms.modal.mall.Goods;
 import com.apsms.modal.mall.Order;
 import com.apsms.modal.user.User;
@@ -112,6 +113,10 @@ public class ShoppingListServiceImpl implements ShoppingListService {
     @Override
     public Page<ShoppingList> findAll(String name, int pageNumber, int pageSize) {
         User user = userService.getCurrentUser();
+
+        if (user == null) {
+            throw new UserNotExistExcepion("user is not exit");
+        }
         Pageable pageable = new PageRequest(pageNumber,pageSize);
         Page<ShoppingList> page = shoppingListRepository.findShoppingListByUserPageable(name, user.getId(),pageable);
 

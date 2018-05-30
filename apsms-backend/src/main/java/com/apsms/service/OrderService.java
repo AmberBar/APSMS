@@ -18,4 +18,8 @@ public interface OrderService {
     Page<Order> queryAll(final String name, int pageNumber, int pageSize);
 
     Order updateOrderPaid(Integer out_trade_no);
+
+    Page<Order> findAllOrders(final String name, int pageNumber, int pageSize);
+
+    Order delivery(Integer id);
 }
