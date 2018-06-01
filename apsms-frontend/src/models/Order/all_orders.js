@@ -48,6 +48,8 @@ export default {
             });
           },
         *pullData({ payload }, { put, call, select }){
+            console.log("////////////////")
+            console.log(payload)
             let params = payload
             let pagination = yield select(state=>state.all_orders.pagination)
             const result = yield call(queryOrders, params);
@@ -73,12 +75,16 @@ export default {
         },
         *delivery({ payload }, { put, call, select }) {
             const result = yield call(delivery, payload);
-
-            console.log("////////////")
-            console.log(payload)
-            console.log("////////////")
+            let pagination = {
+              name: "",
+              pageNumber: 0,
+              pageSize: 10,
+            }
             if (result.data.success === true) {
-                
+                yield put({
+                  type: 'pullData',
+                  payload: pagination
+                })
             } else {
               message.error(result.data.data)
             }

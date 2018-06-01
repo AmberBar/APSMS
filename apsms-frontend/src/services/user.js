@@ -54,5 +54,13 @@ export async function getUserInfo() {
     method: "get"
   })
 }
-  
+
+export async function createUserByAdmin(params) {
+  return request({
+    url: `/users/createUserByAdmin`,
+    method: `post`,
+    data: params
+  })
+}
+
   

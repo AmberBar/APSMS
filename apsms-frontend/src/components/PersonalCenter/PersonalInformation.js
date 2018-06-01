@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link} from 'react-router-dom'
-import { Table, Button, Modal, Form, Input, Cascader} from 'antd'
+import { Table, Button, Modal, Form, Input, Cascader, Popconfirm} from 'antd'
 import $ from "jquery"
 import styles from "./PersonalInformation.less"
 import * as moment from "moment"
@@ -89,6 +89,10 @@ class PersonalInformation extends Component {
         })
     }
 
+    confirm = (text) => {
+        this.props.delete(text.id)
+    }
+
     render() {
         let { user } = this.props
         let { addresses } = this.state
@@ -132,10 +136,9 @@ class PersonalInformation extends Component {
                 render: (text, record, index) => {
                     return (
                         <div>
-                            <Button type="primary" >
-                               Edit
-                            </Button>
-                            <Button type="primary">Delete</Button>
+                            <Popconfirm title="Are you sure delete this task?" onConfirm={() => this.confirm(text)} okText="Yes" cancelText="No">
+                                <Button>Delete</Button>
+                            </Popconfirm>
                         </div>
                     );
                 }
@@ -334,6 +337,30 @@ export class CreateAddress extends Component {
         });
     }
 
+    handleOk = (e) => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            console.log(values)
+          if (!err) {
+            let address = ""
+            for (let i = 0; i< values.address.length; i ++) {
+                address += values.address[i] + ","
+            }
+            values.address = address
+            this.setState({
+                visible: false
+            })
+            this.props.submit(values);
+          }
+        });
+    }
+
+    handleCancel = (e) => {
+        this.setState({
+            visible: false
+        })
+    }
+
     render() {
         const { getFieldDecorator } = this.props.form;
 
@@ -370,8 +397,8 @@ export class CreateAddress extends Component {
                 <Modal
                     title="Create Adddress"
                     visible={this.state.visible}
-                    // onOk={this.handleOk}
-                    // onCancel={this.handleCancel}
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
                     >
                     <Form onSubmit={this.handleSubmit}>
                             <FormItem

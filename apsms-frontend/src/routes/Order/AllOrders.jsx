@@ -6,8 +6,6 @@ import styles from "./AllOrders.less"
 import AllOrders from "../../components/AllOrders/AllOrders"
 
 export function Orders({history, dispatch, all_orders}) {
-    console.log("/////")
-    console.log(all_orders)
     let { 
         ordersList, 
         pagination

@@ -33,10 +33,14 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public void createAddress(Address address) {
         User currentUser =  userService.getCurrentUser();
-        System.out.println(currentUser);
-        List<Address> addresses = addressRepository.findAll();
+        List<Address> addresses= currentUser.getAddresses();
         addresses.add(address);
         currentUser.setAddresses(addresses);
         userRepository.save(currentUser);
+    }
+
+    @Override
+    public void deleteAddress(Integer id) {
+        addressRepository.delete(id);
     }
 }

@@ -12,4 +12,6 @@ public interface AddressService {
     List<Address> findAll();
 
     void createAddress(Address address);
+
+    void deleteAddress(Integer id);
 }

@@ -2,7 +2,7 @@
 import { routerRedux } from 'dva/router';
 import { message } from "antd";
 import { getUserInfo, updateInfo} from "../../services/user.js"
-import { findAllAddress} from "../../services/address"
+import { findAllAddress, createAddress, deleteAddress} from "../../services/address"
 
 export default {
 
@@ -77,7 +77,7 @@ export default {
         }
       },
       *createAddress({ payload }, { put, call }) {
-        let result = yield call(updateInfo, payload)
+        let result = yield call(createAddress, payload)
         console.log(result)
         if (result.data.success === true) {
           yield put({
@@ -87,6 +87,22 @@ export default {
           message.success("add address success!")
         } else {
           message.error("add address fail!")
+        }
+      },
+      *deleteAddress({ payload }, { put, call }) {
+        let params = {
+          id: payload
+        }
+        let result = yield call(deleteAddress, params)
+        console.log(result)
+        if (result.data.success === true) {
+          yield put({
+            type: "findAllAddress",
+            payload: {}
+          })
+          message.success("delete address success!")
+        } else {
+          message.error("delete address fail!")
         }
       }
     },

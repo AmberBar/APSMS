@@ -2,7 +2,7 @@ import { findAllUsers } from "../services/user.js"
 import { setcookie } from "../utils/common.js"
 import { routerRedux } from 'dva/router';
 import { message } from "antd";
-import { register, updateUser, deleteUser } from "../services/user.js"
+import { register, updateUser, deleteUser , createUserByAdmin} from "../services/user.js"
 
 export default {
 
@@ -101,7 +101,7 @@ export default {
         }
       },
       *registerUser({ payload }, { put, call }) {    
-        const data = yield call(register, payload);
+        const data = yield call(createUserByAdmin, payload);
         if (data.data.success === true ) {    
           yield put({
             type: "save",

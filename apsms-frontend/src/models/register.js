@@ -36,7 +36,7 @@ export default {
           const data = yield call(register, payload);
           if (data.data.success === true ) {
             localStorageService.setItem("user", data.data.data);
-            yield put(routerRedux.push('/apsms'));
+            yield put(routerRedux.push('/login'));
           } else {
             message.warn(data.data.data);
           }

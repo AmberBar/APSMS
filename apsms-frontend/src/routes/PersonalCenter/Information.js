@@ -20,6 +20,12 @@ export function Information({history, dispatch, personal_information}) {
                 type: "personal_information/createAddress",
                 payload: params
             })
+        },
+        delete(params) {
+            dispatch({
+                type: "personal_information/deleteAddress",
+                payload: params
+            })
         }
     }
 

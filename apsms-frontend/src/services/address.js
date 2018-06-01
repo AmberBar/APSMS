@@ -11,7 +11,15 @@ export async function findAllAddress(params) {
 export async function createAddress(params) {
     return request({
         url: `/address/createAddress`,
-        method: `get`,
+        method: `post`,
         data: params
+    })
+}
+
+export async function deleteAddress(params) {
+    return request({
+        url: `/address/deleteAddress`,
+        method: `delete`,
+        params: params
     })
 }

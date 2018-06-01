@@ -165,18 +165,13 @@ export class　Action extends Component{
         case "obligations":
           return (
             <div>
-              <a onClick={() => this.handlePaied()}>
-                pay for
-              </a>
+                obligation
             </div>
           );
           break;
         case "paid":
           return (
             <div>
-              <div >
-                paid
-              </div>
               <Button onClick={this.handleDelivery}>
                   delivery
               </Button>

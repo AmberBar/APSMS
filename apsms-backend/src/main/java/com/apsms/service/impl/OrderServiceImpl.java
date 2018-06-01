@@ -44,9 +44,19 @@ public class OrderServiceImpl implements OrderService {
         ShoppingCart shoppingCart = shoppingCartRepository.findByUser(user);
         order =  orderRepository.save(order);
         List<ShoppingList>  shoppingLists = shoppingListRepository.findAllByUser(user.getId());
+        System.out.println("///////////////////////");
+        System.out.println(shoppingCart);
+
+        if (shoppingCart == null) {
+            shoppingCart = new ShoppingCart();
+            shoppingCart.setUser(user);
+        }
         shoppingCart.setShoppingLists(shoppingLists);
+        System.out.println("///////////////////////");
         System.out.println(shoppingCart.getShoppingLists());
+        System.out.println("///////////////////////");
         shoppingCartRepository.save(shoppingCart);
+
         return order;
     }
 

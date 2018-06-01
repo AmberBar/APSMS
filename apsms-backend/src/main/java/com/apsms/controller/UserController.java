@@ -70,7 +70,7 @@ public class UserController {
         }
 
         UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken( username, password);
-
+        System.out.println(upToken);
         Authentication authentication = authenticationManager.authenticate(upToken);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -102,18 +102,25 @@ public class UserController {
 
         User newUser = userService.createUser(user);
 
-        UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken( newUser.getUsername(), user.getPassword());
-
-        Authentication authentication = authenticationManager.authenticate(upToken);
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(newUser.getUsername());
-
-        String token = jwtTokenUtil.generateToken(userDetails);
-
-        return new JsonResponse(true,  token);
+        return new JsonResponse(true,  newUser);
     }
+
+
+    @PostMapping("/createUserByAdmin")
+    public JsonResponse createUserByAdmin (
+            @Valid @RequestBody User user
+    ) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        User oldUser = userService.findUserByName(user.getUsername());
+
+        if (oldUser != null) {
+            throw new IllegalArgumentException("username is exit");
+        }
+
+        User newUser = userService.createUser(user);
+
+        return new JsonResponse(true,  newUser);
+    }
+
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete")
