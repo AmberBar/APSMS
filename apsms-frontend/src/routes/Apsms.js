@@ -6,7 +6,7 @@ import MainLayout from '../components/MainLayout/MainLayout';
 import GoodsContainer from '../components/Mall/GoodsContainer';
 import styles from "./Apsms.less"
 
-export function Apsms({history, dispatch, apsms}) {
+export function Apsms({ app ,history, dispatch, apsms}) {
     let { goodsList, pagination } = apsms
     const apsmaProps = {
         goodsList,
@@ -34,6 +34,12 @@ export function Apsms({history, dispatch, apsms}) {
             });
         }
     }
+
+    console.log(app)
+    // let { user } = app
+    // const mainLayOutProps = {
+        
+    // }
     
     return(
         <MainLayout >

@@ -1,9 +1,34 @@
 import React, { Component } from 'react';
 import { Link} from 'react-router-dom'
-import { Table, Button, Modal, Form, Input} from 'antd'
+import { Table, Button, Modal, Form, Input, Cascader} from 'antd'
 import $ from "jquery"
 import styles from "./PersonalInformation.less"
 import * as moment from "moment"
+
+
+const options = [{
+    value: 'zhejiang',
+    label: 'Zhejiang',
+    children: [{
+      value: 'hangzhou',
+      label: 'Hangzhou',
+      children: [{
+        value: 'xihu',
+        label: 'West Lake',
+      }],
+    }],
+  }, {
+    value: 'jiangsu',
+    label: 'Jiangsu',
+    children: [{
+      value: 'nanjing',
+      label: 'Nanjing',
+      children: [{
+        value: 'zhonghuamen',
+        label: 'Zhong Hua Men',
+      }],
+    }],
+  }];
 
 const FormItem = Form.Item;
 
@@ -34,16 +59,16 @@ class PersonalInformation extends Component {
             this.props.submit(values);
           }
         });
-      }
+    }
+
+    handleCreateAddress = (params) =>  {
+        this.props.createAddress(params);
+    }
 
     handleEditInfo = () => {
         this.setState({
             visible: true
         })
-    }
-
-    handleEditAddress = () => {
-        
     }
 
     handleOk = (e) => {
@@ -127,18 +152,18 @@ class PersonalInformation extends Component {
               sm: { span: 16 },
             },
           };
-          const tailFormItemLayout = {
+        const tailFormItemLayout = {
             wrapperCol: {
-              xs: {
+                xs: {
                 span: 24,
                 offset: 0,
-              },
-              sm: {
+                },
+                sm: {
                 span: 16,
                 offset: 8,
-              },
+                },
             },
-          };
+        };
 
         let s = []
         return (
@@ -264,7 +289,7 @@ class PersonalInformation extends Component {
                         pagination={false}
                     />
                 </div>
-                    <CreateAddress />
+                    <CreateAddress submit={this.handleCreateAddress}/>
             </div>      
         );
     }
@@ -287,7 +312,56 @@ export class CreateAddress extends Component {
         })
     }
 
+    onChange(value) {
+        console.log(value);
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            console.log(values)
+          if (!err) {
+            let address = ""
+            for (let i = 0; i< values.address.length; i ++) {
+                address += values.address[i] + ","
+            }
+            values.address = address
+            this.setState({
+                visible: false
+            })
+            this.props.submit(values);
+          }
+        });
+    }
+
     render() {
+        const { getFieldDecorator } = this.props.form;
+
+        const formItemLayout = {
+            labelCol: {
+              xs: { span: 24 },
+              sm: { span: 8 },
+            },
+            wrapperCol: {
+              xs: { span: 24 },
+              sm: { span: 16 },
+            },
+          };
+        const tailFormItemLayout = {
+            wrapperCol: {
+                xs: {
+                span: 24,
+                offset: 0,
+                },
+                sm: {
+                span: 16,
+                offset: 8,
+                },
+            },
+        };
+
+        
+
         return (
             <div >
                 <Button onClick={this.handleCreateAddress}>
@@ -299,9 +373,79 @@ export class CreateAddress extends Component {
                     // onOk={this.handleOk}
                     // onCancel={this.handleCancel}
                     >
-                    
+                    <Form onSubmit={this.handleSubmit}>
+                            <FormItem
+                                {...formItemLayout}
+                                label={(
+                                    <span>
+                                    consignee&nbsp;
+                                    </span>
+                                )}
+                                >
+                                {getFieldDecorator('consignee', {
+                                    rules: [{ required: true, message: 'Please input consignee!', whitespace: true }],
+
+                                })(  
+                                    <Input />
+                                )}
+                            </FormItem>
+
+                            <FormItem
+                                {...formItemLayout}
+                                label={(
+                                    <span>
+                                    Phone&nbsp;
+                                    </span>
+                                )}
+                                >
+                                {getFieldDecorator('phone', {
+                                    rules: [{ required: true, message: 'Please input phone!', whitespace: true }],
+
+                                })(  
+                                    <Input />
+                                )}
+                            </FormItem>
+                            <FormItem
+                            
+                                {...formItemLayout}
+                                label={(
+                                    <span>
+                                    address&nbsp;
+                                    </span>
+                                )}
+                            >
+                                {getFieldDecorator('address', {
+                                    rules: [{ required: true, message: 'Please input phone!'}],
+
+                                })(  
+                                    <Cascader options={options} onChange={this.onChange} placeholder="Please select" />
+                                )}
+                            </FormItem>
+                            
+                            <FormItem
+                                {...formItemLayout}
+                                label={(
+                                    <span>
+                                    zipCode&nbsp;
+                                    </span>
+                                )}
+                                >
+                                {getFieldDecorator('zipCode', {
+                                    rules: [{ required: true, message: 'Please input phone!'}],
+
+                                })(  
+                                    <Input />
+                                )}
+                            </FormItem>
+
+                            <FormItem {...tailFormItemLayout}>
+                                <Button type="primary" htmlType="submit">submit</Button>
+                            </FormItem>
+                        </Form>
                 </Modal>
             </div>
         );
     }
 }
+CreateAddress = Form.create()(CreateAddress)
+

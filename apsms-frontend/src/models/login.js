@@ -1,4 +1,4 @@
-import { checkLogin } from "../services/user.js"
+import { checkLogin, getUserInfo} from "../services/user.js"
 import { setcookie, localStorageService } from "../utils/common.js"
 import { routerRedux } from 'dva/router';
 import { message } from "antd";
@@ -38,10 +38,13 @@ export default {
           const result = yield call(checkLogin  , payload.values);
           if (result.data.success === true) {
             localStorageService.setItem("user", result.data.data);
-            
+            const profile = yield call(getUserInfo)
+
+            if (profile.data.success) {
+              localStorageService.setItem("profile", profile.data.data)
+            }
             yield put(routerRedux.push('/apsms'));
-          //  yield call(setcookie, "user" ,result.data.data)
-            //把用户信息放到cookies
+            
           
           } else {
             message.error(result.data.data)

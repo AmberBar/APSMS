@@ -14,6 +14,12 @@ export function Information({history, dispatch, personal_information}) {
                 type: 'personal_information/updateInfo',
                 payload: params
             })
+        },
+        createAddress(params) {
+            dispatch({
+                type: "personal_information/createAddress",
+                payload: params
+            })
         }
     }
 

@@ -7,3 +7,11 @@ export async function findAllAddress(params) {
         params: params
       })
 }
+
+export async function createAddress(params) {
+    return request({
+        url: `/address/createAddress`,
+        method: `get`,
+        data: params
+    })
+}

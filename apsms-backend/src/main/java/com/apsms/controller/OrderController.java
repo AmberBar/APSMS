@@ -26,7 +26,7 @@ public class OrderController {
         return new JsonResponse(true, orderService.createOrder(order));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/findAll")
     public JsonResponse findAll(
             @RequestParam("name") String name,
@@ -37,6 +37,7 @@ public class OrderController {
         return new JsonResponse(true, orderService.queryAll(name,pageNumber, pageSize ));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/findAllOrders")
     public JsonResponse findAllOrder(
             @RequestParam("name") String name,
@@ -46,6 +47,7 @@ public class OrderController {
         return new JsonResponse(true, orderService.findAllOrders(name,pageNumber, pageSize ));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/delivery")
     public JsonResponse delivery(
             @RequestParam("id") int id

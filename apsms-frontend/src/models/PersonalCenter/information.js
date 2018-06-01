@@ -75,6 +75,19 @@ export default {
         } else {
           message.error("update fail!")
         }
+      },
+      *createAddress({ payload }, { put, call }) {
+        let result = yield call(updateInfo, payload)
+        console.log(result)
+        if (result.data.success === true) {
+          yield put({
+            type: "findAllAddress",
+            payload: {}
+          })
+          message.success("add address success!")
+        } else {
+          message.error("add address fail!")
+        }
       }
     },
   

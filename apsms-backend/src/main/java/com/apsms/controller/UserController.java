@@ -52,9 +52,8 @@ public class UserController {
         return new JsonResponse(true, users);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/getUserInfo")
-    public JsonResponse usersAll(
+    public JsonResponse getUserInfo(
 
     ) {
         User user= userService.getCurrentUser();
